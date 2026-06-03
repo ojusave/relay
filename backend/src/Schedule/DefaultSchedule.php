@@ -10,6 +10,7 @@ use App\Service\InfrastructureBounce\Message\ClearOldInfrastructureBouncesMessag
 use App\Service\Management\Message\RunHealthChecksMessage;
 use App\Service\Send\Message\ClearExpiredSendsMessage;
 use App\Service\Tls\Message\CheckMailCertificateValidityMessage;
+use App\Service\Ip\Message\ResetIpWarmupMessage;
 use App\Service\Webhook\Message\ClearOldWebhookDeliveriesMessage;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Scheduler\Attribute\AsSchedule;
