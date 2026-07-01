@@ -17,7 +17,8 @@ import type {
 	SudoProjectsResponse,
 	SudoProjectResponse,
 	SudoSendsResponse,
-	SudoSendResponse
+	SudoSendResponse,
+	WarmupSchedule
 } from './sudoTypes';
 
 export function initSudo() {
@@ -241,5 +242,11 @@ export function getProjectOrganizations(limit: number, before_id: number | null 
 export function getProjectById(id: number) {
 	return sudoApi.get<SudoProjectResponse>({
 		endpoint: `/projects/${id}`
+	});
+}
+
+export function getWarmupSchedules(ipId: number) {
+	return sudoApi.get<WarmupSchedule[]>({
+		endpoint: `/ip-addresses/${ipId}/warmup-schedules`
 	});
 }

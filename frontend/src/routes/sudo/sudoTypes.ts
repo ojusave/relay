@@ -45,12 +45,7 @@ export interface IpAddress {
 	queue: Queue | null;
 	is_ptr_forward_valid: boolean;
 	is_ptr_reverse_valid: boolean;
-	warmup_status: 'warming' | 'warmed';
-	warmup_started_date: number | null;
-	warmup_sent_today: number;
-	warmup_max_today: number;
-	warmup_schedule: number[] | null;
-	is_warming_up: boolean;
+	currentWarmupSchedule: WarmupSchedule | null;
 }
 
 export interface Queue {
@@ -225,4 +220,14 @@ export interface SudoProjectsResponse {
 export interface SudoProjectResponse {
 	project: SudoProject;
 	org: Organization | null;
+}
+
+export interface WarmupSchedule {
+	id: number;
+	warmup_status: 'warming' | 'warmed';
+	warmup_started_date: number | null;
+	warmup_sent_today: number;
+	warmup_max_today: number;
+	warmup_schedule: number[] | null;
+	created_at: number;
 }
