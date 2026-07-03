@@ -73,9 +73,6 @@ export type Send = {
 	from_address: string;
 	from_name: string | null;
 	subject: string | null;
-	body_html: string | null;
-	body_text: string | null;
-	raw: string;
 	size_bytes: number;
 	queued: boolean;
 	send_after: number;
@@ -83,6 +80,13 @@ export type Send = {
 	recipients: SendRecipient[];
 	attempts: SendAttempt[];
 	feedback: SendFeedback[];
+};
+
+export type SendContent = {
+	body_html: string | null;
+	body_text: string | null;
+	headers: Record<string, string>;
+	raw: string;
 };
 
 export type SendRecipientStatus =
