@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Api\Sudo\DnsRecord;
 
 use App\Api\Sudo\Controller\DnsRecordController;
@@ -92,9 +94,9 @@ class GetDefaultDnsRecordsTest extends WebTestCase
         ];
 
         foreach ($records as $index => $record) {
-            $this->assertEquals($record['type'], $json[$index]['type']);
-            $this->assertEquals($record['host'], $json[$index]['host']);
-            $this->assertEquals($record['content'], $json[$index]['content']);
+            $this->assertSame($record['type'], $json[$index]['type']);
+            $this->assertSame($record['host'], $json[$index]['host']);
+            $this->assertSame($record['content'], $json[$index]['content']);
         }
     }
 

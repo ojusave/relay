@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service\Management\Health;
 
 use App\Entity\IpAddress;
@@ -74,7 +76,7 @@ class AllIpsAreInSpfRecordHealthCheckTest extends KernelTestCase
         $this->assertArrayHasKey('invalid_ips', $data);
         $this->assertArrayHasKey('domain', $data);
         $this->assertSame([$ip_address2->getIpAddress()], $data['invalid_ips']);
-        $this->assertEquals('mail.hyvor-relay.com', $data['domain']);
+        $this->assertSame('mail.hyvor-relay.com', $data['domain']);
     }
 
     public function testCheckReturnsFalseWhenInvalidIp(): void
@@ -98,7 +100,7 @@ class AllIpsAreInSpfRecordHealthCheckTest extends KernelTestCase
         $this->assertArrayHasKey('invalid_ips', $data);
         $this->assertArrayHasKey('domain', $data);
         $this->assertSame([$ip_address1->getIpAddress()], $data['invalid_ips']);
-        $this->assertEquals('mail.hyvor-relay.com', $data['domain']);
+        $this->assertSame('mail.hyvor-relay.com', $data['domain']);
     }
 
     public function testCheckReturnsTrueWhenIpRangeInSpfRecord(): void

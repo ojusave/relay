@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Api;
 
 use Hyvor\Internal\Bundle\Api\ApiExceptionListener;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service\App\Env;
 
 use App\Service\App\Env\AdvisoryProcessor;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Send\MessageHandler;
 
 use App\Service\Send\Message\ClearExpiredSendsMessage;

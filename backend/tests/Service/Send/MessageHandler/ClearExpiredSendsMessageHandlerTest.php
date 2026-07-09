@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service\Send\MessageHandler;
 
 use App\Entity\Send;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service\InfrastructureBounce\MessageHandler;
 
 use App\Entity\InfrastructureBounce;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service\Tls\Acme;
 
 use App\Service\Dns\Resolve\DnsResolveInterface;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service\Domain\MessageHandler;
 
 use App\Entity\Domain;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Api\Console\Domain;
 
 use App\Api\Console\Authorization\Scope;
@@ -96,8 +98,8 @@ class GetDomainTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $response = $this->getJson();
-        $this->assertEquals($domain->getId(), $response['id']);
-        $this->assertEquals($domain->getDomain(), $response['domain']);
+        $this->assertSame($domain->getId(), $response['id']);
+        $this->assertSame($domain->getDomain(), $response['domain']);
     }
 
 }

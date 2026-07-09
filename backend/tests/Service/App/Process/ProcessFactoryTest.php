@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service\App\Process;
 
 use App\Service\App\Process\ProcessFactory;

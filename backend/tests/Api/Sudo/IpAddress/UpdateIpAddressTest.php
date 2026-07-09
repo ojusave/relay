@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Api\Sudo\IpAddress;
 
 use App\Api\Sudo\Controller\IpAddressController;
@@ -35,7 +37,7 @@ class UpdateIpAddressTest extends WebTestCase
         $this->assertResponseStatusCodeSame(400);
 
         $response = $this->getJson();
-        $this->assertEquals("IP address with ID '99999' does not exist.", $response['message']);
+        $this->assertSame("IP address with ID '99999' does not exist.", $response['message']);
     }
 
     public function test_update_ip_address_queue(): void
@@ -55,16 +57,16 @@ class UpdateIpAddressTest extends WebTestCase
 
         $json = $this->getJson();
 
-        $this->assertEquals($ipAddress->getId(), $json['id']);
-        $this->assertEquals($ipAddress->getIpAddress(), $json['ip_address']);
+        $this->assertSame($ipAddress->getId(), $json['id']);
+        $this->assertSame($ipAddress->getIpAddress(), $json['ip_address']);
 
         $ipAddressDb = $this->em->getRepository(IpAddress::class)->findOneBy(['id' => $ipAddress->getId()]);
         $this->assertNotNull($ipAddressDb);
-        $this->assertEquals($queue->getName(), $ipAddressDb->getQueue()?->getName());
+        $this->assertSame($queue->getName(), $ipAddressDb->getQueue()?->getName());
 
         $serverTasks = $this->em->getRepository(ServerTask::class)->findBy(['server' => $ipAddress->getServer()]);
         $this->assertCount(1, $serverTasks);
-        $this->assertEquals(ServerTaskType::UPDATE_STATE, $serverTasks[0]->getType());
+        $this->assertSame(ServerTaskType::UPDATE_STATE, $serverTasks[0]->getType());
     }
 
     public function test_update_ip_address_invalid_queue(): void
@@ -82,7 +84,7 @@ class UpdateIpAddressTest extends WebTestCase
         $this->assertResponseStatusCodeSame(400);
 
         $response = $this->getJson();
-        $this->assertEquals("Queue with ID '99999' does not exist.", $response['message']);
+        $this->assertSame("Queue with ID '99999' does not exist.", $response['message']);
     }
 
     public function test_update_ip_address_unasign_queue(): void
@@ -103,8 +105,8 @@ class UpdateIpAddressTest extends WebTestCase
 
         $json = $this->getJson();
 
-        $this->assertEquals($ipAddress->getId(), $json['id']);
-        $this->assertEquals($ipAddress->getIpAddress(), $json['ip_address']);
+        $this->assertSame($ipAddress->getId(), $json['id']);
+        $this->assertSame($ipAddress->getIpAddress(), $json['ip_address']);
 
         $ipAddressDb = $this->em->getRepository(IpAddress::class)->findOneBy(['id' => $ipAddress->getId()]);
         $this->assertNotNull($ipAddressDb);
@@ -112,6 +114,6 @@ class UpdateIpAddressTest extends WebTestCase
 
         $serverTasks = $this->em->getRepository(ServerTask::class)->findBy(['server' => $ipAddress->getServer()]);
         $this->assertCount(1, $serverTasks);
-        $this->assertEquals(ServerTaskType::UPDATE_STATE, $serverTasks[0]->getType());
+        $this->assertSame(ServerTaskType::UPDATE_STATE, $serverTasks[0]->getType());
     }
 }

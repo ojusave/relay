@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service\Tls;
 
 use App\Service\Management\Health\Event\DnsServerCorrectlyPointedEvent;

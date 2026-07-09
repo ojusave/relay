@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\App\RateLimit;
 
 use Psr\Cache\CacheItemPoolInterface;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Domain\Dto;
 
 use App\Entity\Type\DomainStatus;

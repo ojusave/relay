@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Ip\Event;
 
 use App\Entity\IpAddress;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Ip;
 
 use App\Entity\IpAddress;
@@ -69,7 +71,7 @@ class IpAddressService
 
         // Create IP addresses that are in the server's current IP addresses but not in the database
         foreach ($serverIpAddresses as $serverIpAddress) {
-            $inArrayKey = in_array($serverIpAddress, $currentIpAddressesInDb);
+            $inArrayKey = in_array($serverIpAddress, $currentIpAddressesInDb, true);
             if ($inArrayKey === false) {
                 $this->createIpAddress($server, $serverIpAddress);
             }
@@ -78,7 +80,7 @@ class IpAddressService
         // Delete IP addresses that are in the database but not in the server's current IP addresses
         $ipAddressesToDelete = array_filter(
             $currentIpAddressesEntitiesInDb,
-            fn (IpAddress $ip) => !in_array($ip->getIpAddress(), $serverIpAddresses)
+            fn (IpAddress $ip) => !in_array($ip->getIpAddress(), $serverIpAddresses, true)
         );
         foreach ($ipAddressesToDelete as $ipAddress) {
             $this->deleteIpAddress($ipAddress);

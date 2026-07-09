@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Tls\Acme\Dto;
 
 use App\Service\Tls\Acme\Exception\AcmeException;

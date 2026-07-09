@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Api\Sudo\Debug;
 
 use App\Api\Sudo\Controller\DebugController;
