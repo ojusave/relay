@@ -9,4 +9,4 @@ class UpdateProjectDto
     use OptionalPropertyTrait;
 
     public string $name;
-} 
+}

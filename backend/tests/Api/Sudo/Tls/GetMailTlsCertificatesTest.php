@@ -16,7 +16,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(TlsCertificateObject::class)]
 class GetMailTlsCertificatesTest extends WebTestCase
 {
-
     public function test_gets_mail_tls(): void
     {
         $current = TlsCertificateFactory::createOne(['type' => TlsCertificateType::MAIL]);

@@ -9,7 +9,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class ClearOldInfrastructureBouncesMessageHandler
 {
-
     public function __construct(private EntityManagerInterface $em)
     {
     }
@@ -27,4 +26,3 @@ class ClearOldInfrastructureBouncesMessageHandler
     }
 
 }
-

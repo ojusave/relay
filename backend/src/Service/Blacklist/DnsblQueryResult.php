@@ -7,7 +7,6 @@ use Symfony\Component\DependencyInjection\Attribute\Exclude;
 #[Exclude]
 class DnsblQueryResult
 {
-
     public function __construct(
         private bool $blocked,
         private ?string $resolvedIp = null,

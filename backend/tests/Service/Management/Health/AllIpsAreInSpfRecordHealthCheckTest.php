@@ -8,7 +8,6 @@ use App\Service\Instance\InstanceService;
 use App\Service\Ip\IpAddressService;
 use App\Service\Management\Health\AllIpsAreInSpfRecordHealthCheck;
 use App\Tests\Case\KernelTestCase;
-
 use App\Tests\Factory\InstanceFactory;
 use App\Tests\Factory\IpAddressFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -17,7 +16,6 @@ use SPFLib\Check\Environment;
 use SPFLib\Check\Result;
 use SPFLib\Checker;
 use SPFLib\DNS\Resolver;
-
 
 #[CoversClass(AllIpsAreInSpfRecordHealthCheck::class)]
 class AllIpsAreInSpfRecordHealthCheckTest extends KernelTestCase
@@ -120,4 +118,4 @@ class AllIpsAreInSpfRecordHealthCheckTest extends KernelTestCase
         $this->assertTrue($result);
         $this->assertEmpty($this->healthCheck->getData());
     }
-} 
+}

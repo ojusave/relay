@@ -89,4 +89,3 @@ class InfrastructureBounceService
         return $result;
     }
 }
-

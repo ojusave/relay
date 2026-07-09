@@ -16,7 +16,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 #[CoversClass(LocalAuthorizationListener::class)]
 class LocalAuthorizationListenerTest extends KernelTestCase
 {
-
     private function getKernel(): KernelInterface
     {
         $kernel = self::$kernel;

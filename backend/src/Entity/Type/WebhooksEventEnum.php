@@ -4,7 +4,6 @@ namespace App\Entity\Type;
 
 enum WebhooksEventEnum: string
 {
-
     case SEND_RECIPIENT_ACCEPTED = 'send.recipient.accepted';
     case SEND_RECIPIENT_DEFERRED = 'send.recipient.deferred';
     case SEND_RECIPIENT_BOUNCED = 'send.recipient.bounced';

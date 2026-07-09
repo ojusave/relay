@@ -20,7 +20,6 @@ use PHPUnit\Framework\Attributes\TestWith;
 #[CoversClass(DomainStatusService::class)]
 class ReverifyDomainsMessageHandlerTest extends KernelTestCase
 {
-
     #[TestWith([true])]
     #[TestWith([false])]
     public function test_reverifies_when_all_passes(bool $verified): void

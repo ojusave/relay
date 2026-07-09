@@ -11,7 +11,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class RunHealthChecksMessageHandler
 {
-
     private LoggerInterface $logger;
 
     public function __construct(
@@ -36,4 +35,4 @@ class RunHealthChecksMessageHandler
         }
         // @codeCoverageIgnoreEnd
     }
-} 
+}

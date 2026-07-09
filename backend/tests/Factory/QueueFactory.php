@@ -12,7 +12,6 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
  */
 final class QueueFactory extends PersistentProxyObjectFactory
 {
-
     public function __construct()
     {
         parent::__construct();

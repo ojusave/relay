@@ -22,7 +22,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 #[CoversClass(QueueService::class)]
 class UpdateIpAddressTest extends WebTestCase
 {
-
     public function test_when_ip_address_not_found(): void
     {
         $this->sudoApi(

@@ -62,9 +62,11 @@ class SendObject
         $this->queued = $send->getQueued();
         $this->send_after = $send->getSendAfter()->getTimestamp();
 
-        $this->recipients = array_map(fn($recipient) => new SendRecipientObject($recipient),
-            $send->getRecipients()->toArray());
-        $this->attempts = array_map(fn(SendAttempt $attempt) => new SendAttemptObject($attempt), $attempts);
-        $this->feedback = array_map(fn(SendFeedback $fb) => new SendFeedbackObject($fb), $feedback);
+        $this->recipients = array_map(
+            fn ($recipient) => new SendRecipientObject($recipient),
+            $send->getRecipients()->toArray()
+        );
+        $this->attempts = array_map(fn (SendAttempt $attempt) => new SendAttemptObject($attempt), $attempts);
+        $this->feedback = array_map(fn (SendFeedback $fb) => new SendFeedbackObject($fb), $feedback);
     }
 }

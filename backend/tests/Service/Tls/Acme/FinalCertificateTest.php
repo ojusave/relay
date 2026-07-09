@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(FinalCertificate::class)]
 class FinalCertificateTest extends TestCase
 {
-
     public function test_pem_to_cert(): void
     {
         $cert = <<<EOT

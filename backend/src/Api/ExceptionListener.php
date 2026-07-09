@@ -9,7 +9,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 #[AsEventListener(event: KernelEvents::EXCEPTION)]
 class ExceptionListener extends ApiExceptionListener
 {
-
     /**
      * @codeCoverageIgnore
      */

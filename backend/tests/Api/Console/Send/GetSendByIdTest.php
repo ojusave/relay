@@ -32,7 +32,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(SendFeedbackService::class)]
 class GetSendByIdTest extends WebTestCase
 {
-
     public function test_fails_when_not_found(): void
     {
         $project = ProjectFactory::createOne();

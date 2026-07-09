@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(Scope::class)]
 class ScopeTest extends TestCase
 {
-
     public function test_methods(): void
     {
         $all = Scope::all();

@@ -4,7 +4,6 @@ namespace App\Service\Tls\Acme\Dto;
 
 class FinalCertificate
 {
-
     public function __construct(
         public string $certificatePem,
         public \DateTimeImmutable $validFrom,

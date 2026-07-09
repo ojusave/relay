@@ -11,7 +11,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class DnsOverHttp implements DnsResolveInterface
 {
-
     public const CLOUDFLARE_DNS_QUERY_URL = "https://cloudflare-dns.com/dns-query";
 
     public function __construct(

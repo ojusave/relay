@@ -7,4 +7,3 @@ enum SendFeedbackType: string
     case BOUNCE = 'bounce';
     case COMPLAINT = 'complaint';
 }
-

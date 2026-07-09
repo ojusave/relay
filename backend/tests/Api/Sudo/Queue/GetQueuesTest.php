@@ -14,7 +14,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(QueueObject::class)]
 class GetQueuesTest extends WebTestCase
 {
-
     public function test_get_queues(): void
     {
         $queue1 = QueueFactory::createTransactional();

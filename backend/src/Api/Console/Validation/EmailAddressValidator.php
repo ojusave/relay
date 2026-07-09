@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class EmailAddressValidator extends ConstraintValidator
 {
-
     public function __construct(private ValidatorInterface $validator)
     {
     }

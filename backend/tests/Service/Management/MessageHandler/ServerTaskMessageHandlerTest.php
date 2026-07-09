@@ -23,7 +23,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[CoversClass(GoHttpApi::class)]
 class ServerTaskMessageHandlerTest extends KernelTestCase
 {
-
     public function test_when_no_server_found(): void
     {
         $transport = $this->transport('scheduler_server');

@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(ProcessFactory::class)]
 class ProcessFactoryTest extends TestCase
 {
-
     public function test_create_process(): void
     {
         $factory = new ProcessFactory();

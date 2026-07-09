@@ -4,7 +4,6 @@ namespace App\Service\Send;
 
 class SendLimits
 {
-
     public const MAX_RECIPIENTS_PER_SEND = 20;
 
     /**

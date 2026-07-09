@@ -29,7 +29,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(DnsblLookupException::class)]
 class NoneOfTheIpsAreOnKnownBlacklistsHealthCheckTest extends KernelTestCase
 {
-
     /**
      * @return array{0: bool, 1: array<mixed>}
      */

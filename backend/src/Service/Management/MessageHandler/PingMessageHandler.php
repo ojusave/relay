@@ -12,7 +12,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class PingMessageHandler
 {
-
     private LoggerInterface $logger;
 
     public function __construct(

@@ -12,8 +12,7 @@ class ClearOldWebhookDeliveriesMessageHandler
 {
     public function __construct(
         private EntityManagerInterface $em
-    )
-    {
+    ) {
     }
 
     public function __invoke(ClearOldWebhookDeliveriesMessage $message): void

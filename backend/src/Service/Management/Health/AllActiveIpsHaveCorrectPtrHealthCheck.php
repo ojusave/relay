@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class AllActiveIpsHaveCorrectPtrHealthCheck extends HealthCheckAbstract
 {
-
     public function __construct(
         private EntityManagerInterface $em,
         private IpAddressService $ipAddressService,

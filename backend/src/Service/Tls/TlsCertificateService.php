@@ -13,7 +13,6 @@ use Symfony\Component\Clock\ClockAwareTrait;
 
 class TlsCertificateService
 {
-
     use ClockAwareTrait;
 
     public function __construct(

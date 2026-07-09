@@ -11,7 +11,6 @@ use SPFLib\Check\Environment;
 use SPFLib\DNS\Resolver;
 use SPFLib\Exception\InvalidIPAddressException;
 
-
 class AllIpsAreInSpfRecordHealthCheck extends HealthCheckAbstract
 {
     public function __construct(

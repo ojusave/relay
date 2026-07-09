@@ -7,7 +7,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class RootApiController
 {
-
     #[Route('/health', methods: ['GET'])]
     public function health(): JsonResponse
     {

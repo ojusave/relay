@@ -4,7 +4,6 @@ namespace App\Service\Domain;
 
 class Dkim
 {
-
     public const string DKIM_SUBDOMAIN = '_domainkey';
 
     public static function generateDkimSelector(): string
@@ -22,9 +21,7 @@ class Dkim
          * only use a different one for tests
          */
         int $bits = 2048,
-
-    ): array
-    {
+    ): array {
         $privateKey = \openssl_pkey_new([
             'private_key_bits' => $bits,
             'private_key_type' => \OPENSSL_KEYTYPE_RSA

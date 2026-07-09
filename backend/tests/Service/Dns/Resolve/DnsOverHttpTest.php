@@ -19,7 +19,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[CoversClass(ResolveAnswer::class)]
 class DnsOverHttpTest extends KernelTestCase
 {
-
     public function test_dns_success(): void
     {
         $mockResponse = new JsonMockResponse([

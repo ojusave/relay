@@ -4,7 +4,6 @@ namespace App\Service\Blacklist;
 
 class IpBlacklists
 {
-
     /**
      * @return IpBlacklist[]
      */

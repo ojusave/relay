@@ -23,7 +23,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class AcmeClient implements LoggerAwareInterface
 {
-
     use LoggerAwareTrait;
 
     public const string DIRECTORY_URL_LETSENCRYPT_PRODUCTION = 'https://acme-v02.api.letsencrypt.org/directory';

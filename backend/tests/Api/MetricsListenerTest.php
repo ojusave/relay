@@ -13,7 +13,6 @@ use Prometheus\MetricFamilySamples;
 #[CoversClass(PrometheusFactory::class)]
 class MetricsListenerTest extends WebTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();

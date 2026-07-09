@@ -29,7 +29,6 @@ use Symfony\Component\Lock\LockFactory;
 #[CoversClass(GenerateCertificateMessage::class)]
 class GenerateCertificateMessageHandlerTest extends KernelTestCase
 {
-
     public function test_when_lock_is_acquired(): void
     {
         try {

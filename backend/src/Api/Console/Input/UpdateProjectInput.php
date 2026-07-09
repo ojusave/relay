@@ -11,4 +11,4 @@ class UpdateProjectInput
 
     #[Assert\Length(min: 1, max: 255)]
     public string $name;
-} 
+}

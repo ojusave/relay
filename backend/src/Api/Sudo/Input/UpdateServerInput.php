@@ -4,7 +4,6 @@ namespace App\Api\Sudo\Input;
 
 class UpdateServerInput
 {
-
     public int $api_workers {
         set {
             $this->apiWorkersSet = true;

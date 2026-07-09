@@ -11,7 +11,6 @@ use App\Service\Ip\Dto\PtrValidationDto;
 
 class Ptr
 {
-
     private const string PTR_PREFIX = 'smtp';
 
     public function __construct(
@@ -46,7 +45,7 @@ class Ptr
 
         $aRecords = $dnsAnswer->answers;
         // we connect so that it fails if there are multiple A records
-        $aRecordsJoined = implode(', ', array_map(fn($answer) => $answer->data, $aRecords));
+        $aRecordsJoined = implode(', ', array_map(fn ($answer) => $answer->data, $aRecords));
         if ($isReverse) {
             $aRecordsJoined = rtrim($aRecordsJoined, '.');
         }

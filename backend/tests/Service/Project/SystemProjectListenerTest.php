@@ -22,7 +22,6 @@ use Hyvor\Internal\Sudo\Event\SudoRemovedEvent;
 #[CoversClass(DomainService::class)]
 class SystemProjectListenerTest extends KernelTestCase
 {
-
     #[TestWith([SudoAddedEvent::class])]
     #[TestWith([SudoRemovedEvent::class])]
     public function test_when_sudo_added_or_removed(string $event): void

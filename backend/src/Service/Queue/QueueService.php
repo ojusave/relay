@@ -9,7 +9,6 @@ use Doctrine\ORM\Query\ResultSetMapping;
 
 class QueueService
 {
-
     public const string TRANSACTIONAL_QUEUE_NAME = 'transactional';
     public const string DISTRIBUTIONAL_QUEUE_NAME = 'distributional';
 

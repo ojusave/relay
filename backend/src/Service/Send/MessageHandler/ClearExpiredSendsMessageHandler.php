@@ -9,7 +9,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class ClearExpiredSendsMessageHandler
 {
-
     public function __construct(private EntityManagerInterface $em)
     {
     }

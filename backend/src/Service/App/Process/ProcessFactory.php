@@ -6,7 +6,6 @@ use Symfony\Component\Process\Process;
 
 class ProcessFactory
 {
-
     /**
      * @param string[] $command
      * @param array<string, string>|null $env

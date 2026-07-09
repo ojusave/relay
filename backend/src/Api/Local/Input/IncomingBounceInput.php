@@ -37,4 +37,3 @@ class IncomingBounceInput
     #[Assert\NotBlank]
     public string $rcpt_to;
 }
-

@@ -4,7 +4,6 @@ namespace App\Service\Tls;
 
 class PrivateKey
 {
-
     public static function generatePrivateKey(): \OpenSSLAsymmetricKey
     {
         $key = openssl_pkey_new([

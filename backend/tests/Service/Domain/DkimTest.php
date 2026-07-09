@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(Dkim::class)]
 class DkimTest extends TestCase
 {
-
     public function test_generate_dkim_functions(): void
     {
         $selector = Dkim::generateDkimSelector();

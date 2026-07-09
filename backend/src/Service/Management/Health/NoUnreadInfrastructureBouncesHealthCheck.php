@@ -7,7 +7,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class NoUnreadInfrastructureBouncesHealthCheck extends HealthCheckAbstract
 {
-
     public function __construct(
         private EntityManagerInterface $em
     ) {
@@ -35,4 +34,3 @@ class NoUnreadInfrastructureBouncesHealthCheck extends HealthCheckAbstract
         return false;
     }
 }
-

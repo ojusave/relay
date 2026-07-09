@@ -18,7 +18,6 @@ use Hyvor\Internal\Sudo\Event\SudoRemovedEvent;
 #[AsEventListener(SudoRemovedEvent::class, method: 'onSudoRemoved')]
 class SystemProjectListener
 {
-
     public function __construct(
         private SudoUserService $sudoUserService,
         private InstanceService $instanceService,
@@ -40,7 +39,7 @@ class SystemProjectListener
             Scope::DOMAINS_READ,
             Scope::ANALYTICS_READ,
         ];
-        $scopes = array_map(fn($scope) => $scope->value, $scopes);
+        $scopes = array_map(fn ($scope) => $scope->value, $scopes);
 
         foreach ($allSudo as $sudoUser) {
             $this->projectUserService->createProjectUser(

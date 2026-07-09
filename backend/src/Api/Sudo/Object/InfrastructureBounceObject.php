@@ -25,4 +25,3 @@ class InfrastructureBounceObject
         $this->send_recipient_id = $bounce->getSendRecipientId();
     }
 }
-

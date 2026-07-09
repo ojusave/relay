@@ -36,7 +36,9 @@ class DnsRecord
     #[ORM\Column(type: "integer")]
     private int $priority = 0;
 
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function getId(): int
     {

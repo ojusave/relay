@@ -10,7 +10,6 @@ use Symfony\Component\RateLimiter\Storage\CacheStorage;
 
 class RateLimiterProvider
 {
-
     public function __construct(
         private LockFactory $lockFactory,
         private CacheItemPoolInterface $cacheItemPool,

@@ -15,7 +15,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SendAttemptService
 {
-
     public function __construct(
         private EntityManagerInterface $em,
         private EventDispatcherInterface $ed,

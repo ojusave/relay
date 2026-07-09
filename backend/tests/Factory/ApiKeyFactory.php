@@ -33,7 +33,7 @@ final class ApiKeyFactory extends PersistentProxyObjectFactory
             'key_hashed' => hash('sha256', self::faker()->uuid()),
             'scopes' => [
                 ...array_map(
-                    fn(Scope $scope) => $scope->value,
+                    fn (Scope $scope) => $scope->value,
                     Scope::cases()
                 )
             ],

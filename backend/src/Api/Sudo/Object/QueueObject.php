@@ -6,7 +6,6 @@ use App\Entity\Queue;
 
 class QueueObject
 {
-
     public int $id;
     public int $created_at;
     public int $updated_at;

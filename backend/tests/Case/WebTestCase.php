@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestCase
 {
-
     use ApiTestingTrait;
 
     protected KernelBrowser $client;
@@ -118,7 +117,7 @@ class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestCase
             $apiKeyFactory = ['key_hashed' => $apiKeyHashed, 'project' => $project];
             if ($scopes !== true) {
                 $apiKeyFactory['scopes'] = array_map(
-                    fn(Scope|string $scope) => is_string($scope) ? $scope : $scope->value,
+                    fn (Scope|string $scope) => is_string($scope) ? $scope : $scope->value,
                     $scopes
                 );
             }

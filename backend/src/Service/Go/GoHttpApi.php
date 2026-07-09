@@ -11,7 +11,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class GoHttpApi
 {
-
     public function __construct(
         private HttpClientInterface $httpClient,
         private Config $config,

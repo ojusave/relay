@@ -16,7 +16,6 @@ use Symfony\Component\Uid\Uuid;
 
 class EmailBuilder
 {
-
     public function __construct(
         private Encryption $encryption,
         private InstanceService $instanceService,

@@ -103,4 +103,4 @@ class AllActiveIpsHaveCorrectPtrHealthCheckTest extends KernelTestCase
         $this->assertFalse($invalidPtrs[0]['reverse_valid']);
         $this->assertEquals('Simulated reverse PTR failure', $invalidPtrs[0]['reverse_error']);
     }
-} 
+}

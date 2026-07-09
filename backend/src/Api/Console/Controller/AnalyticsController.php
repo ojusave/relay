@@ -14,7 +14,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AnalyticsController extends AbstractController
 {
-
     public function __construct(
         private SendAnalyticsService $sendAnalyticsService
     ) {

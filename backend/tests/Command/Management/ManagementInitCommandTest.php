@@ -31,7 +31,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(QueueService::class)]
 class ManagementInitCommandTest extends KernelTestCase
 {
-
     public function test_creates_instance_server_and_adds_ips(): void
     {
         $serverIpMock = $this->createMock(ServerIp::class);

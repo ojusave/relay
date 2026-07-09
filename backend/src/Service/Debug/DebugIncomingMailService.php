@@ -7,11 +7,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DebugIncomingMailService
 {
-
     public function __construct(
         private EntityManagerInterface $em
-    )
-    {
+    ) {
     }
 
     /**

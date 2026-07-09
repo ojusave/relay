@@ -14,7 +14,7 @@ class UpdateDnsRecordInput
         }
     }
 
-    private(set) bool $typeSet;
+    public private(set) bool $typeSet;
 
     public string $subdomain {
         set {
@@ -23,7 +23,7 @@ class UpdateDnsRecordInput
         }
     }
 
-    private(set) bool $subdomainSet;
+    public private(set) bool $subdomainSet;
 
     public string $content {
         set {
@@ -32,7 +32,7 @@ class UpdateDnsRecordInput
         }
     }
 
-    private(set) bool $contentSet;
+    public private(set) bool $contentSet;
 
     #[Assert\PositiveOrZero]
     public int $ttl {
@@ -42,7 +42,7 @@ class UpdateDnsRecordInput
         }
     }
 
-    private(set) bool $ttlSet;
+    public private(set) bool $ttlSet;
 
     #[Assert\PositiveOrZero]
     public int $priority {
@@ -52,5 +52,5 @@ class UpdateDnsRecordInput
         }
     }
 
-    private(set) bool $prioritySet;
+    public private(set) bool $prioritySet;
 }

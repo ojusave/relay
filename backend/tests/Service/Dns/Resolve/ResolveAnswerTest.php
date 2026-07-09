@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(ResolveAnswer::class)]
 class ResolveAnswerTest extends TestCase
 {
-
     public function test_cleans_txt(): void
     {
 

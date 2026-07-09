@@ -11,7 +11,6 @@ use App\Service\Instance\InstanceService;
 
 class InstanceDkimCorrectHealthCheck extends HealthCheckAbstract
 {
-
     public function __construct(
         private InstanceService $instanceService,
         private Config $config,

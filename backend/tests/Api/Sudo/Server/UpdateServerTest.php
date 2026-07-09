@@ -18,7 +18,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[CoversClass(ServerObject::class)]
 class UpdateServerTest extends WebTestCase
 {
-
     public function test_update_server_api_workers(): void
     {
         $mockResponse = new JsonMockResponse();
@@ -59,7 +58,8 @@ class UpdateServerTest extends WebTestCase
         $this->assertEquals(5, $response['incoming_workers']);
 
         // Assert task has been created into DB
-        $taskServer = $this->em->getRepository(ServerTask::class)->findOneBy(['server' => $server->_real()]
+        $taskServer = $this->em->getRepository(ServerTask::class)->findOneBy(
+            ['server' => $server->_real()]
         )?->getServer();
         $this->assertSame($server->getId(), $taskServer?->getId());
     }

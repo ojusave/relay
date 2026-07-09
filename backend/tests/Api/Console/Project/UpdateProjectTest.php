@@ -109,4 +109,4 @@ class UpdateProjectTest extends WebTestCase
         $this->assertNotNull($projectDb);
         $this->assertSame('Original Project Name', $projectDb->getName());
     }
-} 
+}

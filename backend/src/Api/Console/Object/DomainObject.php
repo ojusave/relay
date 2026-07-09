@@ -8,7 +8,6 @@ use App\Service\Domain\Dkim;
 
 class DomainObject
 {
-
     public int $id;
     public int $created_at;
     public string $domain;

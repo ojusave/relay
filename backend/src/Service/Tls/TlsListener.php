@@ -10,7 +10,6 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 #[AsEventListener(DnsServerCorrectlyPointedEvent::class, 'onDnsServerCorrectlyPointed')]
 class TlsListener
 {
-
     public function __construct(
         private InstanceService $instanceService,
         private MailTlsGenerator $mailTlsGenerator,

@@ -44,7 +44,6 @@ use PHPUnit\Framework\Attributes\TestWith;
 #[CoversClass(SendRecipientSuppressedEvent::class)]
 class WebhookEventListenerTest extends KernelTestCase
 {
-
     public function test_gets_webhooks_correctly(): void
     {
         $project = ProjectFactory::createOne();

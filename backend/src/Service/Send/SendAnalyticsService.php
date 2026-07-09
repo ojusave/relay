@@ -9,7 +9,6 @@ use Symfony\Component\Clock\ClockAwareTrait;
 
 class SendAnalyticsService
 {
-
     use ClockAwareTrait;
 
     public function __construct(private EntityManagerInterface $em)
@@ -104,7 +103,7 @@ class SendAnalyticsService
         while ($currentDate <= $endDate) {
             $dateStr = $currentDate->format('Y-m-d');
 
-            $row = array_filter($result, fn($r) => $r['date'] === $dateStr);
+            $row = array_filter($result, fn ($r) => $r['date'] === $dateStr);
             $row = count($row) ? array_shift($row) : null;
 
             $data[] = [

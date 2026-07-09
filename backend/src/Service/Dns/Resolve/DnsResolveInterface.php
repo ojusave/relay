@@ -4,7 +4,6 @@ namespace App\Service\Dns\Resolve;
 
 interface DnsResolveInterface
 {
-
     /**
      * @throws DnsResolvingFailedException
      */

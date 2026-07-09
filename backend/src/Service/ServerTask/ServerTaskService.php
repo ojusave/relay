@@ -11,7 +11,6 @@ use Symfony\Component\Clock\ClockAwareTrait;
 
 class ServerTaskService
 {
-
     use ClockAwareTrait;
 
     public function __construct(

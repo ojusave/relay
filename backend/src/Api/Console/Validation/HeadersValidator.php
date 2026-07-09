@@ -8,7 +8,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class HeadersValidator extends ConstraintValidator
 {
-
     // IMPORTANT! should be lowercase
     // document in SendEmails.svelte (/docs/send-emails#limits)
     // MUST BE kept in sync with custom_headers.go

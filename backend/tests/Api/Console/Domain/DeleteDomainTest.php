@@ -23,7 +23,6 @@ use PHPUnit\Framework\Attributes\TestWith;
 #[CoversClass(DomainDeletedEvent::class)]
 class DeleteDomainTest extends WebTestCase
 {
-
     public function test_when_both_id_and_domain_are_null(): void
     {
         $project = ProjectFactory::createOne();

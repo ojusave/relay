@@ -8,7 +8,6 @@ use App\Service\Instance\InstanceService;
 
 class InstanceObject
 {
-
     public string $domain;
 
     public string $dkim_host;

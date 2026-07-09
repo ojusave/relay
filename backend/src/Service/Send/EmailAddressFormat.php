@@ -12,7 +12,6 @@ use Symfony\Component\Mime\Address;
 #[Exclude]
 class EmailAddressFormat
 {
-
     /**
      * @param string $email must be a valid email address
      */

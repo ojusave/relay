@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  */
 class Config
 {
-
     public function __construct(
         #[Autowire('%env(string:APP_VERSION)%')]
         private string $appVersion,

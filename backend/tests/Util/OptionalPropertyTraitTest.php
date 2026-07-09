@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversTrait(OptionalPropertyTrait::class)]
 class OptionalPropertyTraitTest extends TestCase
 {
-
     public function test_has_property(): void
     {
         $object = new MyClass();
@@ -24,7 +23,8 @@ class OptionalPropertyTraitTest extends TestCase
 
 }
 
-class MyClass {
+class MyClass
+{
     use OptionalPropertyTrait;
 
     public int $initializedProperty;

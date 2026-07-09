@@ -22,7 +22,6 @@ use Hyvor\Internal\Bundle\Log\ContextualLogger;
 #[AsMessageHandler]
 class ReverifyDomainsMessageHandler
 {
-
     private LoggerInterface $logger;
 
     public function __construct(

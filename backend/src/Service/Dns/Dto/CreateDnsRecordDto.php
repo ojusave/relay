@@ -12,5 +12,6 @@ class CreateDnsRecordDto
         public readonly string $content,
         public readonly int $ttl = 3600,
         public readonly int $priority = 0,
-    ) {}
+    ) {
+    }
 }

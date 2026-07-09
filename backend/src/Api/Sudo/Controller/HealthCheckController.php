@@ -16,7 +16,8 @@ class HealthCheckController extends AbstractController
     public function __construct(
         private HealthCheckService $healthCheckService,
         private InstanceService $instanceService,
-    ) {}
+    ) {
+    }
 
     #[Route('/health-checks', methods: 'POST')]
     public function runHealthChecks(): JsonResponse

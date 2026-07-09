@@ -7,7 +7,6 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 #[AutoconfigureTag('app.health_check')]
 abstract class HealthCheckAbstract
 {
-
     /** @var array<mixed> */
     private array $data = [];
 

@@ -9,7 +9,6 @@ use App\Service\Dns\Resolve\DnsType;
 
 class DnsblQuery
 {
-
     public function __construct(
         private DnsResolveInterface $dnsResolve
     ) {

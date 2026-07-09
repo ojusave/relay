@@ -10,7 +10,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(GenerateMailTlsCertificateCommand::class)]
 class GenerateMailTlsCertificateCommandTest extends KernelTestCase
 {
-
     public function test_execute(): void
     {
         $command = $this->commandTester('tls:generate-mail-certificate');

@@ -17,7 +17,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(InstanceService::class)]
 class SudoInitTest extends WebTestCase
 {
-
     public function test_inits_sudo(): void
     {
         $this->sudoApi('POST', '/init');

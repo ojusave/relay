@@ -11,7 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand('management:init', description: 'Initialize the current server in the database')]
 class ManagementInitCommand extends Command
 {
-
     public function __construct(private readonly ManagementService $managementService)
     {
         parent::__construct();

@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(Cpu::class)]
 class CpuTest extends TestCase
 {
-
     public function test_get_cores_returns_integer(): void
     {
         $cores = Cpu::getCores();

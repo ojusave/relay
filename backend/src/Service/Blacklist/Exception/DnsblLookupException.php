@@ -4,7 +4,6 @@ namespace App\Service\Blacklist\Exception;
 
 class DnsblLookupException extends \Exception
 {
-
     public function __construct(
         string $blacklist,
         string $query,

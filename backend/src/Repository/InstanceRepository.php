@@ -24,7 +24,7 @@ class InstanceRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
-        
+
         return $result;
     }
 }

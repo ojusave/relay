@@ -14,7 +14,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(DnsRecordObject::class)]
 class GetDnsRecordsTest extends WebTestCase
 {
-
     public function test_gets_dns_records(): void
     {
         $record1 = DnsRecordFactory::createOne();
