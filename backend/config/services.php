@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->parameters()
         ->set('env(HOSTING)', 'self') // Default to self-hosted
-        ->set('app.filesystem_default', 's3')
+        ->set('env(FILESYSTEM)', 'file') // Default to local filesystem
     ;
 
     $services = $containerConfigurator->services();
@@ -85,7 +85,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(Filesystem::class)
         ->factory([FilesystemFactory::class, 'create'])
         ->args([
-            '%env(default:app.filesystem_default:string:FILESYSTEM)%',
+            '%env(string:FILESYSTEM)%',
             new Reference(S3Client::class),
             '%env(default::string:S3_BUCKET)%',
         ]);
