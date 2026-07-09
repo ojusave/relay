@@ -19,7 +19,6 @@ use Symfony\Component\Clock\Test\ClockSensitiveTrait;
 #[CoversClass(SendService::class)]
 class RetrySendTest extends WebTestCase
 {
-
     use ClockSensitiveTrait;
 
     public function test_retry_failed_recipients(): void

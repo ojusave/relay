@@ -15,7 +15,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(SendAnalyticsService::class)]
 class GetAnalyticsStatsTest extends WebTestCase
 {
-
     public function test_gets_default_30d(): void
     {
         $project = ProjectFactory::createOne();

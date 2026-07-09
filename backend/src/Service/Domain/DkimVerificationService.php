@@ -10,7 +10,6 @@ use App\Service\Domain\Exception\DkimVerificationFailedException;
 
 class DkimVerificationService
 {
-
     public function __construct(
         private DnsResolveInterface $dnsResolve,
     ) {

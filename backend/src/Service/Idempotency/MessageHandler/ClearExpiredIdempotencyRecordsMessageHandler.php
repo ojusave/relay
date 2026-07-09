@@ -10,11 +10,9 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class ClearExpiredIdempotencyRecordsMessageHandler
 {
-
     public function __construct(
         private EntityManagerInterface $em
-    )
-    {
+    ) {
     }
 
     public function __invoke(ClearExpiredIdempotencyRecordsMessage $message): void

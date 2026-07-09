@@ -10,7 +10,6 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
 class ProjectResolver implements ValueResolverInterface
 {
-
     public function __construct()
     {
     }

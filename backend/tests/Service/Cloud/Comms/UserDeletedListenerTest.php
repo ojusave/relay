@@ -20,16 +20,16 @@ class UserDeletedListenerTest extends WebTestCase
         ProjectUserFactory::createMany(2, [
             'project' => ProjectFactory::new(),
             'user_id' => $deletingUserId
-		]);
+        ]);
 
         ProjectUserFactory::createMany(3, [
             'project' => ProjectFactory::new(),
             'user_id' => $deletingUserId
-		]);
+        ]);
 
         ProjectUserFactory::createMany(4, [
             'project' => ProjectFactory::createOne(),
-		]);
+        ]);
 
         $this->getEd()->dispatch(new UserDeleted($deletingUserId));
 

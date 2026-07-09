@@ -14,7 +14,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[CoversClass(GoHttpApi::class)]
 class ParseBounceOrFblTest extends WebTestCase
 {
-
     public function test_parse_bounce_or_fbl_endpoint(): void
     {
         $response = new JsonMockResponse(['status' => 'parsed']);

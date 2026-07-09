@@ -8,4 +8,4 @@ use Symfony\Component\Messenger\Attribute\AsMessage;
 #[AsMessage(MessageTransport::ASYNC)]
 readonly class RunHealthChecksMessage
 {
-} 
+}

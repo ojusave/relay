@@ -12,7 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class DomainStatusService
 {
-
     use ClockAwareTrait;
 
     public function __construct(

@@ -8,7 +8,6 @@ use App\Entity\Type\SendRecipientType;
 
 class SendRecipientObject
 {
-
     public int $id;
     public SendRecipientType $type;
     public string $address;

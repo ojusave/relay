@@ -20,7 +20,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(InstanceDkimCorrectHealthCheck::class)]
 class InstanceDkimCorrectHealthCheckTest extends KernelTestCase
 {
-
     private function doTest(
         ResolveResult|true $result,
         bool $verified,

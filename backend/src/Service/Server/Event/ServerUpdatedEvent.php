@@ -7,7 +7,6 @@ use App\Service\Server\Dto\UpdateServerDto;
 
 class ServerUpdatedEvent
 {
-
     public function __construct(
         private Server $oldServer,
         private Server $server,

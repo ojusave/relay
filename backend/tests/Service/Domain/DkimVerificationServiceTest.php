@@ -15,7 +15,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(DkimVerificationService::class)]
 class DkimVerificationServiceTest extends KernelTestCase
 {
-
     private function doTest(
         Domain $domain,
         ResolveResult|true $result,

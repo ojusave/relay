@@ -30,7 +30,6 @@ use Symfony\Component\Clock\MockClock;
 #[CoversClass(AllowedIp::class)]
 class AuthorizationTest extends WebTestCase
 {
-
     protected function shouldEnableAuthFake(): bool
     {
         return false;

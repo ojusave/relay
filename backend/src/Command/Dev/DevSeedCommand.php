@@ -42,7 +42,6 @@ use Hyvor\Internal\Sudo\SudoUserFactory;
 )]
 class DevSeedCommand extends Command
 {
-
     public function __construct(
         private KernelInterface $kernel,
         private InstanceService $instanceService

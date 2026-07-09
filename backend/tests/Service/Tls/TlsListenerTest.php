@@ -13,7 +13,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(TlsListener::class)]
 class TlsListenerTest extends KernelTestCase
 {
-
     public function test_calls_mail_tls_generator_on_dns_server_correctly_pointed_event(): void
     {
         $generator = $this->createMock(MailTlsGenerator::class);

@@ -12,9 +12,8 @@ use Symfony\Component\Clock\ClockAwareTrait;
 
 class KernelTestCase extends \Symfony\Bundle\FrameworkBundle\Test\KernelTestCase
 {
-
-	use ClockAwareTrait;
-	use BaseTestingTrait;
+    use ClockAwareTrait;
+    use BaseTestingTrait;
 
     protected Container $container;
     protected Application $application;
@@ -39,7 +38,7 @@ class KernelTestCase extends \Symfony\Bundle\FrameworkBundle\Test\KernelTestCase
     {
         $command = $this->application->find($name);
         return new CommandTester($command);
-	}
+    }
 
     protected function setConfig(string $key, mixed $value): void
     {

@@ -12,7 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ServerService
 {
-
     use ClockAwareTrait;
 
     public function __construct(

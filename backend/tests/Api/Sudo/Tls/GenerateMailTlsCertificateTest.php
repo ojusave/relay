@@ -20,7 +20,6 @@ use Symfony\Component\Lock\LockFactory;
 #[CoversClass(MxServer::class)]
 class GenerateMailTlsCertificateTest extends WebTestCase
 {
-
     public function test_creates_tls_certificate_and_pushes_job(): void
     {
         $this->sudoApi('POST', '/tls/mail-certs/generate');

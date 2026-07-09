@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class DomainIdOrDomainInput
 {
-
     #[Assert\When(
         'this.domain == null',
         constraints: [

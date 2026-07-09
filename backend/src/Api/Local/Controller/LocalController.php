@@ -23,7 +23,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class LocalController extends AbstractController
 {
-
     use ClockAwareTrait;
 
     public function __construct(

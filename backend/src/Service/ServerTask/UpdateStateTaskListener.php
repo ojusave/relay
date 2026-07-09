@@ -12,7 +12,6 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 #[AsEventListener(CustomDnsRecordsChangedEvent::class, 'onCustomDnsRecordsChanged')]
 class UpdateStateTaskListener
 {
-
     public function __construct(
         private ServerTaskService $serverTaskService,
     ) {

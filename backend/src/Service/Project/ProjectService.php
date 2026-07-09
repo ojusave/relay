@@ -22,14 +22,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ProjectService
 {
-
     use ClockAwareTrait;
 
     public function __construct(
         private EntityManagerInterface $em,
         private EventDispatcherInterface $ed,
-		private ProjectUserService $projectUserService,
-		private CommsInterface $comms,
+        private ProjectUserService $projectUserService,
+        private CommsInterface $comms,
         private InternalConfig $internalConfig
     ) {
     }
@@ -51,8 +50,8 @@ class ProjectService
      * }
      */
     public function createProject(
-		int $userId,
-		int $organizationId,
+        int $userId,
+        int $organizationId,
         string $name,
         ProjectSendType $sendType,
         bool $createProjectUser = true,
@@ -62,8 +61,8 @@ class ProjectService
         $this->ed->dispatch(new ProjectCreatingEvent($userId));
 
         $project = new Project();
-		$project
-			->setOrganizationId($organizationId)
+        $project
+            ->setOrganizationId($organizationId)
             ->setUserId($userId)
             ->setName($name)
             ->setCreatedAt($this->now())
@@ -83,14 +82,14 @@ class ProjectService
 
         if ($flush) {
             $this->em->flush();
-		}
+        }
 
-		if ($this->internalConfig->getDeployment() === Deployment::CLOUD && !$isSystemProject) {
-			$this->comms->send(new ResourceCreated(
-				Component::RELAY,
-				$organizationId
-			));
-		}
+        if ($this->internalConfig->getDeployment() === Deployment::CLOUD && !$isSystemProject) {
+            $this->comms->send(new ResourceCreated(
+                Component::RELAY,
+                $organizationId
+            ));
+        }
 
         return [
             'project' => $project,

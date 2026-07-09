@@ -19,7 +19,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class DomainService
 {
-
     use ClockAwareTrait;
 
     public function __construct(

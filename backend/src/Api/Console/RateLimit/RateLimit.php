@@ -9,14 +9,12 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  */
 class RateLimit
 {
-
     private bool $isDev;
 
     public function __construct(
         #[Autowire('%kernel.environment%')]
         private readonly string $env = 'prod'
-    )
-    {
+    ) {
         $this->isDev = $this->env === 'dev';
     }
 

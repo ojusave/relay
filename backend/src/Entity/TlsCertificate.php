@@ -10,7 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'tls_certificates')]
 class TlsCertificate
 {
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

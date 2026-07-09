@@ -23,7 +23,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(CustomDnsRecordsChangedEvent::class)]
 class UpdateStateTaskListenerTest extends KernelTestCase
 {
-
     public function test_no_task_when_server_updated_without_create_task_flag(): void
     {
         $server = ServerFactory::createOne();

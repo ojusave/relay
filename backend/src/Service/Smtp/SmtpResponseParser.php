@@ -10,8 +10,7 @@ use App\Entity\SendAttemptRecipient;
  */
 class SmtpResponseParser
 {
-
-    const RECIPIENT_ENHANCED_CODES = [
+    public const RECIPIENT_ENHANCED_CODES = [
         '5.1.1', // Bad destination mailbox address
         '5.1.2', // Bad destination system address
         '5.1.3', // Bad destination mailbox address syntax

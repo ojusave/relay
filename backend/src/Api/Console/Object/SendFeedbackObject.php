@@ -7,7 +7,6 @@ use App\Entity\Type\SendFeedbackType;
 
 class SendFeedbackObject
 {
-
     public int $id;
     public int $created_at;
     public SendFeedbackType $type;

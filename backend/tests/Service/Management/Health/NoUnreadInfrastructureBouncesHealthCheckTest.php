@@ -49,4 +49,3 @@ class NoUnreadInfrastructureBouncesHealthCheckTest extends KernelTestCase
         $this->assertEquals(2, $data['unread_count']);
     }
 }
-

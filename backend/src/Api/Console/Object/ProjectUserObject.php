@@ -8,7 +8,6 @@ use Hyvor\Internal\Auth\AuthUser;
 
 class ProjectUserObject
 {
-
     public int $id;
     public int $created_at;
     /**

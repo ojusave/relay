@@ -10,7 +10,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(Config::class)]
 class ConfigTest extends KernelTestCase
 {
-
     public function test_config(): void
     {
         $config = $this->getService(Config::class);

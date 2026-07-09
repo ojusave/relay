@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand('verify', 'Verifies the application setup and configuration.')]
 class VerifyCommand extends Command
 {
-
     public function __construct(
         private Config $appConfig,
         private InternalConfig $internalConfig,

@@ -33,7 +33,6 @@ use Hyvor\Internal\Auth\Oidc\OidcUserFactory;
 #[CoversClass(WebhookDeliveryService::class)]
 class RelayTelemetryProviderTest extends KernelTestCase
 {
-
     public function test_gets_telemetry_data(): void
     {
         // ======= Add Data

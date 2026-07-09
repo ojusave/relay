@@ -14,7 +14,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ServerService::class)]
 class PingMessageHandlerTest extends KernelTestCase
 {
-
     public function test_updates_last_ping(): void
     {
         $server = ServerFactory::createOne(['hostname' => 'hyvor-relay', 'lastPingAt' => null]);

@@ -13,7 +13,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand('tls:generate-mail-certificate', 'Generates a TLS certificate for mail servers')]
 class GenerateMailTlsCertificateCommand extends Command
 {
-
     public function __construct(
         private MailTlsGenerator $mailTlsGenerator,
     ) {

@@ -42,7 +42,8 @@ class SendController extends AbstractController
         private SendFeedbackService $sendFeedbackService,
         private DomainService $domainService,
         private QueueService $queueService,
-    ) {}
+    ) {
+    }
 
     #[Route("/sends", methods: "POST")]
     #[ScopeRequired(Scope::SENDS_SEND)]
@@ -174,7 +175,7 @@ class SendController extends AbstractController
                 $limit,
                 $beforeId
             )
-            ->map(fn($send) => new SendObject($send));
+            ->map(fn ($send) => new SendObject($send));
 
         return $this->json($sends);
     }
@@ -221,7 +222,7 @@ class SendController extends AbstractController
         }
 
         $hasFailedRecipients = $send->getRecipients()->exists(
-            fn(int $key, \App\Entity\SendRecipient $r) => $r->getStatus() === SendRecipientStatus::FAILED
+            fn (int $key, \App\Entity\SendRecipient $r) => $r->getStatus() === SendRecipientStatus::FAILED
         );
         if (!$hasFailedRecipients) {
             throw new BadRequestHttpException('No failed recipients to retry');

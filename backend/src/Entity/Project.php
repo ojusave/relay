@@ -28,7 +28,7 @@ class Project
     private \DateTimeImmutable $updated_at;
 
     #[ORM\Column(type: 'string', enumType: ProjectSendType::class)]
-	private ProjectSendType $send_type;
+    private ProjectSendType $send_type;
 
     #[ORM\Column(nullable: true)]
     private ?int $organization_id = null;

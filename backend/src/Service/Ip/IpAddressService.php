@@ -14,7 +14,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class IpAddressService
 {
-
     use ClockAwareTrait;
 
     public function __construct(
@@ -65,7 +64,7 @@ class IpAddressService
     public function updateIpAddressesOfServer(Server $server): void
     {
         $currentIpAddressesEntitiesInDb = $this->getIpAddressesOfServer($server);
-        $currentIpAddressesInDb = array_map(fn(IpAddress $ip) => $ip->getIpAddress(), $currentIpAddressesEntitiesInDb);
+        $currentIpAddressesInDb = array_map(fn (IpAddress $ip) => $ip->getIpAddress(), $currentIpAddressesEntitiesInDb);
         $serverIpAddresses = $this->serverIp->getPublicV4IpAddresses();
 
         // Create IP addresses that are in the server's current IP addresses but not in the database
@@ -79,7 +78,7 @@ class IpAddressService
         // Delete IP addresses that are in the database but not in the server's current IP addresses
         $ipAddressesToDelete = array_filter(
             $currentIpAddressesEntitiesInDb,
-            fn(IpAddress $ip) => !in_array($ip->getIpAddress(), $serverIpAddresses)
+            fn (IpAddress $ip) => !in_array($ip->getIpAddress(), $serverIpAddresses)
         );
         foreach ($ipAddressesToDelete as $ipAddress) {
             $this->deleteIpAddress($ipAddress);

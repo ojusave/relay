@@ -20,7 +20,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ProjectUserObject::class)]
 class CreateProjectUserTest extends WebTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();

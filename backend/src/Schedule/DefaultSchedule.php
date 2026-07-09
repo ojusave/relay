@@ -25,7 +25,6 @@ use Symfony\Contracts\Cache\CacheInterface;
 #[AsSchedule()]
 class DefaultSchedule implements ScheduleProviderInterface
 {
-
     public function __construct(
         private LockFactory $lockFactory,
         private CacheInterface $cache,
@@ -36,19 +35,19 @@ class DefaultSchedule implements ScheduleProviderInterface
     {
         return new SymfonySchedule()
             // infra
-            ->add(RecurringMessage::every('1 hour', new RunHealthChecksMessage))
+            ->add(RecurringMessage::every('1 hour', new RunHealthChecksMessage()))
 
             // api
-            ->add(RecurringMessage::every('1 hour', new ClearExpiredIdempotencyRecordsMessage))
+            ->add(RecurringMessage::every('1 hour', new ClearExpiredIdempotencyRecordsMessage()))
 
             // sends
-            ->add(RecurringMessage::every('1 day', new ClearExpiredSendsMessage))
+            ->add(RecurringMessage::every('1 day', new ClearExpiredSendsMessage()))
 
             // infrastructure bounces
-            ->add(RecurringMessage::every('1 day', new ClearOldInfrastructureBouncesMessage))
+            ->add(RecurringMessage::every('1 day', new ClearOldInfrastructureBouncesMessage()))
 
             // webhooks deliveries
-            ->add(RecurringMessage::every('1 day', new ClearOldWebhookDeliveriesMessage))
+            ->add(RecurringMessage::every('1 day', new ClearOldWebhookDeliveriesMessage()))
 
             // domain verification
 
@@ -66,10 +65,10 @@ class DefaultSchedule implements ScheduleProviderInterface
                     new ReverifyDomainsMessage([DomainStatus::PENDING])
                 )
             )
-            ->add(RecurringMessage::every('1 hour', new PurgeStalePendingSuspendedDomainsMessage))
+            ->add(RecurringMessage::every('1 hour', new PurgeStalePendingSuspendedDomainsMessage()))
 
             // tls certificate renewal
-            ->add(RecurringMessage::every('1 day', new CheckMailCertificateValidityMessage))
+            ->add(RecurringMessage::every('1 day', new CheckMailCertificateValidityMessage()))
 
             // global lock
             ->lock($this->lockFactory->createLock('global-schedule', 20))

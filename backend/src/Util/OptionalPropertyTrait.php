@@ -4,7 +4,6 @@ namespace App\Util;
 
 trait OptionalPropertyTrait
 {
-
     /**
      * Checks if the property is INITIALIZED
      */

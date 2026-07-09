@@ -27,7 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(TlsCertificateService::class)]
 class GetStateTest extends WebTestCase
 {
-
     public function test_cannot_call_from_non_localhost_ip(): void
     {
         $response = $this->localApi(

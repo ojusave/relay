@@ -19,7 +19,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class DnsServerPointedHealthCheck extends HealthCheckAbstract
 {
-
     public function __construct(
         private InstanceService $instanceService,
         private Config $config,

@@ -12,7 +12,6 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 #[CoversClass(ProjectResolver::class)]
 class ProjectResolverTest extends TestCase
 {
-
     public function test_returns_empty_on_other_controllers(): void
     {
         $request = Request::create('/');

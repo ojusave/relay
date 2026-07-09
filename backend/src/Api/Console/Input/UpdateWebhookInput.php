@@ -3,7 +3,6 @@
 namespace App\Api\Console\Input;
 
 use App\Entity\Type\WebhooksEventEnum;
-
 use App\Util\OptionalPropertyTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 

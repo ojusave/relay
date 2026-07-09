@@ -23,20 +23,20 @@ class MemberRemovedListenerTest extends WebTestCase
                 'organization_id' => $removingMemberOrganizationId
             ]),
             'user_id' => $removingMemberUserId
-		]);
+        ]);
 
         ProjectUserFactory::createMany(3, [
             'project' => ProjectFactory::new([
                 'organization_id' => 2
             ]),
             'user_id' => $removingMemberUserId
-		]);
+        ]);
 
         ProjectUserFactory::createMany(4, [
             'project' => ProjectFactory::new([
                 'organization_id' => $removingMemberOrganizationId
             ]),
-		]);
+        ]);
 
         $this->getEd()->dispatch(new MemberRemoved($removingMemberOrganizationId, $removingMemberUserId));
 

@@ -28,8 +28,7 @@ class DebugIncomingEmailService
         string $rcptTo,
         ?array $parsedData = null,
         ?string $errorMessage = null
-    ): DebugIncomingEmail
-    {
+    ): DebugIncomingEmail {
         $debugIncomingEmail = new DebugIncomingEmail();
         $debugIncomingEmail->setCreatedAt($this->now());
         $debugIncomingEmail->setUpdatedAt($this->now());

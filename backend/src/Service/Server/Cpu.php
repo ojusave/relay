@@ -4,7 +4,6 @@ namespace App\Service\Server;
 
 class Cpu
 {
-
     public static function getCores(): int
     {
         $cpuCores = shell_exec('nproc');

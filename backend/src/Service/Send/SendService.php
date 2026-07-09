@@ -189,12 +189,12 @@ class SendService
     public function retrySend(Send $send, ?\DateTimeImmutable $sendAfter, ?array $recipientIds = null): int
     {
         $failedRecipients = $send->getRecipients()->filter(
-            fn(SendRecipient $r) => $r->getStatus() === SendRecipientStatus::FAILED
+            fn (SendRecipient $r) => $r->getStatus() === SendRecipientStatus::FAILED
         );
 
         if ($recipientIds !== null) {
             $failedRecipients = $failedRecipients->filter(
-                fn(SendRecipient $r) => in_array($r->getId(), $recipientIds, true)
+                fn (SendRecipient $r) => in_array($r->getId(), $recipientIds, true)
             );
         }
 

@@ -11,7 +11,6 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
  */
 final class DomainFactory extends PersistentProxyObjectFactory
 {
-
     public function __construct()
     {
         parent::__construct();

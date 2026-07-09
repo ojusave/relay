@@ -17,7 +17,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class ServerTaskMessageHandler
 {
-
     private LoggerInterface $logger;
 
     public function __construct(

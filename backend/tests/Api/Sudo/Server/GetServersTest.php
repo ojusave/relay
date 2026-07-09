@@ -12,7 +12,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ServerService::class)]
 class GetServersTest extends WebTestCase
 {
-
     public function test_get_servers(): void
     {
         // Create test servers

@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 #[CoversClass(Headers::class)]
 class HeadersValidationTest extends ConstraintValidatorTestCase
 {
-
     protected function createValidator(): HeadersValidator
     {
         return new HeadersValidator();

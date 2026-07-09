@@ -39,7 +39,6 @@ use PHPUnit\Framework\Attributes\TestWith;
 #[CoversClass(SendRecipientSuppressedEvent::class)]
 class SendEmailTest extends WebTestCase
 {
-
     public function test_scope(): void
     {
         QueueFactory::createTransactional();

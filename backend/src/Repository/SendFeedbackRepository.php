@@ -16,4 +16,3 @@ class SendFeedbackRepository extends ServiceEntityRepository
         parent::__construct($registry, SendFeedback::class);
     }
 }
-

@@ -12,10 +12,9 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ApiKeyService
 {
-
     use ClockAwareTrait;
 
-    const int MAX_API_KEY_PER_PROJECT = 10;
+    public const int MAX_API_KEY_PER_PROJECT = 10;
 
     public function __construct(
         private EntityManagerInterface $em,
@@ -105,7 +104,7 @@ class ApiKeyService
     private function normalizeAllowedIps(array $entries): array
     {
         return array_values(array_map(
-            fn(string $entry) => AllowedIp::normalizeEntry($entry),
+            fn (string $entry) => AllowedIp::normalizeEntry($entry),
             $entries
         ));
     }

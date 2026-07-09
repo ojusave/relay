@@ -16,7 +16,6 @@ use Hyvor\Internal\SelfHosted\Provider\TelemetryProviderInterface;
 
 class RelayTelemetryProvider implements TelemetryProviderInterface
 {
-
     private string $instanceUuid;
     private string $version;
 

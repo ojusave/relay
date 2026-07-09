@@ -24,7 +24,6 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 class WebhookEventListener
 {
-
     public function __construct(
         private WebhookService $webhookService,
         private SendRecipientService $sendRecipientService
@@ -106,7 +105,7 @@ class WebhookEventListener
         $this->createWebhookDelivery(
             $send->getProject(),
             WebhooksEventEnum::SEND_RECIPIENT_SUPPRESSED,
-            fn() => (object)[
+            fn () => (object)[
                 'send' => new SendObject($send),
                 'recipient' => new SendRecipientObject($sendRecipient),
                 'suppression' => new SuppressionObject($event->getSuppression()),
@@ -122,7 +121,7 @@ class WebhookEventListener
         $this->createWebhookDelivery(
             $send->getProject(),
             WebhooksEventEnum::SEND_RECIPIENT_BOUNCED,
-            fn() => (object)[
+            fn () => (object)[
                 'send' => new SendObject($send),
                 'recipient' => new SendRecipientObject($event->sendRecipient),
                 'bounce' => $event->bounce,
@@ -138,7 +137,7 @@ class WebhookEventListener
         $this->createWebhookDelivery(
             $send->getProject(),
             WebhooksEventEnum::SEND_RECIPIENT_COMPLAINED,
-            fn() => (object)[
+            fn () => (object)[
                 'send' => new SendObject($send),
                 'recipient' => new SendRecipientObject($event->sendRecipient),
                 'complaint' => $event->complaint,
@@ -152,7 +151,7 @@ class WebhookEventListener
         $this->createWebhookDelivery(
             $event->domain->getProject(),
             WebhooksEventEnum::DOMAIN_CREATED,
-            fn() => (object)['domain' => new DomainObject($event->domain)]
+            fn () => (object)['domain' => new DomainObject($event->domain)]
         );
     }
 
@@ -162,7 +161,7 @@ class WebhookEventListener
         $this->createWebhookDelivery(
             $event->domain->getProject(),
             WebhooksEventEnum::DOMAIN_STATUS_CHANGED,
-            fn() => (object)[
+            fn () => (object)[
                 'domain' => new DomainObject($event->domain),
                 'old_status' => $event->oldStatus,
                 'new_status' => $event->newStatus,
@@ -177,7 +176,7 @@ class WebhookEventListener
         $this->createWebhookDelivery(
             $event->domain->getProject(),
             WebhooksEventEnum::DOMAIN_DELETED,
-            fn() => (object)['domain' => new DomainObject($event->domain)]
+            fn () => (object)['domain' => new DomainObject($event->domain)]
         );
     }
 
@@ -187,7 +186,7 @@ class WebhookEventListener
         $this->createWebhookDelivery(
             $event->suppression->getProject(),
             WebhooksEventEnum::SUPPRESSION_CREATED,
-            fn() => (object)['suppression' => new SuppressionObject($event->suppression)]
+            fn () => (object)['suppression' => new SuppressionObject($event->suppression)]
         );
     }
 
@@ -197,7 +196,7 @@ class WebhookEventListener
         $this->createWebhookDelivery(
             $event->suppression->getProject(),
             WebhooksEventEnum::SUPPRESSION_DELETED,
-            fn() => (object)['suppression' => new SuppressionObject($event->suppression)]
+            fn () => (object)['suppression' => new SuppressionObject($event->suppression)]
         );
     }
 }

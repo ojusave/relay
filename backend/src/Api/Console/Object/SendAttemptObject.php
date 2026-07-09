@@ -7,7 +7,6 @@ use App\Entity\Type\SendAttemptStatus;
 
 class SendAttemptObject
 {
-
     public int $id;
     public int $created_at;
     public SendAttemptStatus $status;

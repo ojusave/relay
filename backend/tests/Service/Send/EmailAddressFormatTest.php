@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(EmailAddressFormat::class)]
 class EmailAddressFormatTest extends TestCase
 {
-
     public function test_domain(): void
     {
         $this->assertSame('example.com', EmailAddressFormat::getDomainFromEmail('supun@example.com'));

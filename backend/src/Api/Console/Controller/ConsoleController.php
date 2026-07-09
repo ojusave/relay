@@ -25,14 +25,14 @@ use App\Api\Console\Authorization\Scope;
 
 class ConsoleController extends AbstractController
 {
-
     public function __construct(
         private ProjectUserService $projectUserService,
         private InternalConfig $internalConfig,
         private LoggerInterface $logger,
         private InstanceService $instanceService,
         private SudoUserService $sudoUserService,
-    ) {}
+    ) {
+    }
 
     #[Route('/init', methods: 'GET')]
     #[OrganizationLevelEndpoint]
@@ -50,7 +50,7 @@ class ConsoleController extends AbstractController
         if ($org) {
             $projectUsers = $this->projectUserService->getProjectsOfUserInOrg($user->id, $org->id);
             $projectUsers = array_map(
-                fn($project) => new ProjectUserObject($project, $user),
+                fn ($project) => new ProjectUserObject($project, $user),
                 $projectUsers
             );
         }
@@ -79,10 +79,10 @@ class ConsoleController extends AbstractController
                 'app' => [
                     'system_project_id' => $instance->getSystemProject()->getId(),
                     'webhook' => [
-                        'events' => array_map(fn($event) => $event->value, WebhooksEventEnum::cases()),
+                        'events' => array_map(fn ($event) => $event->value, WebhooksEventEnum::cases()),
                     ],
                     'api_keys' => [
-                        'scopes' => array_map(fn($scope) => $scope->value, Scope::cases()),
+                        'scopes' => array_map(fn ($scope) => $scope->value, Scope::cases()),
                     ],
                     'compliance' => [
                         'rates' => Compliance::getRates(),

@@ -18,7 +18,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(GoStateDnsRecord::class)]
 class GetDefaultDnsRecordsTest extends WebTestCase
 {
-
     public function test_get_default_dns_records(): void
     {
         $instance = InstanceFactory::createOne([

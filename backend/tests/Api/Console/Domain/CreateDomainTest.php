@@ -21,7 +21,6 @@ use PHPUnit\Framework\Attributes\TestWith;
 #[CoversClass(DkimPrivateKeyValidator::class)]
 class CreateDomainTest extends WebTestCase
 {
-
     public function test_fails_when_domain_already_exists(): void
     {
         $project = ProjectFactory::createOne();

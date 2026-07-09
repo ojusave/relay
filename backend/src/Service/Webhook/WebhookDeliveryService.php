@@ -23,7 +23,7 @@ class WebhookDeliveryService
         $webhooks = $this->webhookService->getWebhooksForProject($project);
 
         if ($webhookId !== null) {
-            $webhooks = $webhooks->filter(fn($webhook) => $webhook->getId() === $webhookId);
+            $webhooks = $webhooks->filter(fn ($webhook) => $webhook->getId() === $webhookId);
         }
 
         /** @var WebhookDelivery[] $deliveries */

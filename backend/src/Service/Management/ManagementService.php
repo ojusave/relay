@@ -17,7 +17,6 @@ use Symfony\Component\Lock\LockFactory;
 
 class ManagementService
 {
-
     private OutputInterface $output;
 
     public function __construct(

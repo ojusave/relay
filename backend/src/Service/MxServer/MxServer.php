@@ -6,7 +6,6 @@ use App\Service\App\Config;
 
 class MxServer
 {
-
     public function __construct(private Config $config)
     {
     }

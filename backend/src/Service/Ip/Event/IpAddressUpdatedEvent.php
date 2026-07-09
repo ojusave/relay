@@ -7,7 +7,6 @@ use App\Service\Ip\Dto\UpdateIpAddressDto;
 
 readonly class IpAddressUpdatedEvent
 {
-
     public function __construct(
         private IpAddress $ipAddressOld,
         private IpAddress $ipAddress,

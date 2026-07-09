@@ -14,7 +14,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(DomainObject::class)]
 class GetDomainTest extends WebTestCase
 {
-
     public function test_fails_when_domain_not_found(): void
     {
         $project = ProjectFactory::createOne();

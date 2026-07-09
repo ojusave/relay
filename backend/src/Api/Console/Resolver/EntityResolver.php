@@ -20,7 +20,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EntityResolver implements ValueResolverInterface
 {
-
     private const ENTITIES = [
         'sends' => Send::class,
         'domains' => Domain::class,

@@ -12,7 +12,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(RunHealthChecksMessageHandler::class)]
 class RunHealthChecksMessageHandlerTest extends KernelTestCase
 {
-
     public function test_calls_health_checks(): void
     {
         $logger = $this->getTestLogger();

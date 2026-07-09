@@ -8,7 +8,6 @@ use App\Service\Ip\Ptr;
 
 class IpAddressObject
 {
-
     public int $id;
     public int $created_at;
     public int $server_id;

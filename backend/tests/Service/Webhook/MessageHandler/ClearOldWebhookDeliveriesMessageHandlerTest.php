@@ -13,7 +13,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ClearOldWebhookDeliveriesMessageHandler::class)]
 class ClearOldWebhookDeliveriesMessageHandlerTest extends KernelTestCase
 {
-
     public function test_deletes_deliveries_older_than_14_days(): void
     {
         $webhook = WebhookFactory::createOne();
@@ -46,10 +45,9 @@ class ClearOldWebhookDeliveriesMessageHandlerTest extends KernelTestCase
         $deliveries = $this->em->getRepository(WebhookDelivery::class)->findAll();
         $this->assertCount(2, $deliveries);
 
-        $deliveryIds = array_map(fn(WebhookDelivery $delivery) => $delivery->getId(), $deliveries);
+        $deliveryIds = array_map(fn (WebhookDelivery $delivery) => $delivery->getId(), $deliveries);
         $this->assertContains($delivery4->getId(), $deliveryIds);
         $this->assertContains($delivery5->getId(), $deliveryIds);
     }
 
 }
-

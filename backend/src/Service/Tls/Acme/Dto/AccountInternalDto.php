@@ -4,7 +4,6 @@ namespace App\Service\Tls\Acme\Dto;
 
 readonly class AccountInternalDto
 {
-
     public function __construct(
         public string $privateKeyPem,
         public ?string $kid,

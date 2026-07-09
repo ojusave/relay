@@ -16,7 +16,8 @@ use Symfony\Component\Scheduler\ScheduleProviderInterface;
 #[AsSchedule(name: 'server')]
 class ServerSchedule implements ScheduleProviderInterface
 {
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     public function getSchedule(): SymfonySchedule

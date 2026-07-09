@@ -15,7 +15,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(DnsRecordService::class)]
 class CreateDnsRecordTest extends WebTestCase
 {
-
     public function test_creates_dns_record(): void
     {
         $this->sudoApi("POST", "/dns-records", [

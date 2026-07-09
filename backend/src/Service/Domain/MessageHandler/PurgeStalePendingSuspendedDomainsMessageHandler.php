@@ -14,7 +14,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class PurgeStalePendingSuspendedDomainsMessageHandler
 {
-
     public function __construct(
         private Connection $connection,
         private LoggerInterface $logger,

@@ -12,7 +12,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ClearExpiredSendsMessageHandler::class)]
 class ClearExpiredSendsMessageHandlerTest extends KernelTestCase
 {
-
     public function test_deletes(): void
     {
         $send1 = SendFactory::createOne(['createdAt' => new \DateTimeImmutable('-2 years')]);
@@ -28,7 +27,7 @@ class ClearExpiredSendsMessageHandlerTest extends KernelTestCase
         $sends = $this->em->getRepository(Send::class)->findAll();
         $this->assertCount(2, $sends);
 
-        $sendsIds = array_map(fn(Send $send) => $send->getId(), $sends);
+        $sendsIds = array_map(fn (Send $send) => $send->getId(), $sends);
         $this->assertContains($send4->getId(), $sendsIds);
         $this->assertContains($send5->getId(), $sendsIds);
     }

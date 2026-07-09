@@ -98,4 +98,3 @@ class SendFeedback
         return $this;
     }
 }
-

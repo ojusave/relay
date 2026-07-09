@@ -14,14 +14,14 @@ use Symfony\Contracts\Cache\CacheInterface;
 #[CoversClass(DefaultSchedule::class)]
 class GlobalScheduleTest extends TestCase
 {
-
     use SchedulerTestingTrait;
 
     // just make sure the objects are created without errors
     public function test_global_schedule(): void
     {
         $schedule = new DefaultSchedule(
-            $this->createMock(LockFactory::class), $this->createMock(CacheInterface::class)
+            $this->createMock(LockFactory::class),
+            $this->createMock(CacheInterface::class)
         );
         $s = $schedule->getSchedule();
         $messages = $s->getRecurringMessages();

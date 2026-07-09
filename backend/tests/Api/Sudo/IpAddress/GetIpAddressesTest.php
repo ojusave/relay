@@ -13,7 +13,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(IpAddressService::class)]
 class GetIpAddressesTest extends WebTestCase
 {
-
     public function test_get_ip_addresses(): void
     {
         $instance = InstanceFactory::createOne();

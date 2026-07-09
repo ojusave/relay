@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(LocalController::class)]
 class GetMetricsTest extends WebTestCase
 {
-
     public function test_prometheus_metrics(): void
     {
         $response = $this->localApi("GET", "/metrics");

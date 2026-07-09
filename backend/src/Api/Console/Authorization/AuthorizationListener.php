@@ -23,7 +23,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 #[AsEventListener(event: KernelEvents::CONTROLLER, priority: 200)]
 class AuthorizationListener
 {
-
     use ClockAwareTrait;
 
     public const string RESOLVED_PROJECT_ATTRIBUTE_KEY = 'console_api_resolved_project';

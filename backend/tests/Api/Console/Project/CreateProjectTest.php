@@ -28,15 +28,15 @@ class CreateProjectTest extends WebTestCase
 
     public function test_create_project_valid(): void
     {
-		AuthFake::enableForSymfony(
-			$this->container,
-			['id' => 1],
-			new AuthUserOrganization(
-				id: 1,
-				name: 'Fake Organization',
-				role: 'member'
-			)
-		);
+        AuthFake::enableForSymfony(
+            $this->container,
+            ['id' => 1],
+            new AuthUserOrganization(
+                id: 1,
+                name: 'Fake Organization',
+                role: 'member'
+            )
+        );
 
         SudoUserFactory::createOne(['user_id' => 1]);
 
@@ -78,15 +78,15 @@ class CreateProjectTest extends WebTestCase
 
     public function test_disallow_project_creation_for_non_sudo_users(): void
     {
-		AuthFake::enableForSymfony(
-			$this->container,
-			['id' => 99],
-			new AuthUserOrganization(
-				id: 1,
-				name: 'Fake Organization',
-				role: 'member'
-			)
-		);
+        AuthFake::enableForSymfony(
+            $this->container,
+            ['id' => 99],
+            new AuthUserOrganization(
+                id: 1,
+                name: 'Fake Organization',
+                role: 'member'
+            )
+        );
 
         $this->client->getCookieJar()->set(new Cookie('authsess', 'validSession'));
 

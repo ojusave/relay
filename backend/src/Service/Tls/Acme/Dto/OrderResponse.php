@@ -6,7 +6,6 @@ use App\Service\Tls\Acme\Exception\AcmeException;
 
 readonly class OrderResponse
 {
-
     /**
      * @param string[] $authorizations
      */

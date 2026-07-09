@@ -18,11 +18,11 @@ use Symfony\Component\Routing\Attribute\Route;
 #[SudoPermissionRequired(SudoPermission::ACCESS_SUDO)]
 class TlsController extends AbstractController
 {
-
     public function __construct(
         private InstanceService $instanceService,
         private TlsCertificateService $tlsCertificateService,
-    ) {}
+    ) {
+    }
 
     #[Route('/tls/mail-certs', methods: 'GET')]
     public function getMailTlsCertificates(): JsonResponse

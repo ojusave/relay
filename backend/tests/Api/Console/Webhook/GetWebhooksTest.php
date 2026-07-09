@@ -2,7 +2,6 @@
 
 namespace App\Tests\Api\Console\Webhook;
 
-
 use App\Api\Console\Controller\WebhookController;
 use App\Api\Console\Object\WebhookObject;
 use App\Service\Webhook\WebhookService;

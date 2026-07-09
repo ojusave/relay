@@ -30,7 +30,7 @@ class GoStateDnsRecordsService
         /** @var GoStateDnsRecord[] $records */
         $records = [];
         $allIps = $this->ipAddressService->getAllIpAddresses();
-        $allIpsString = array_map(fn($ip) => $ip->getIpAddress(), $allIps);
+        $allIpsString = array_map(fn ($ip) => $ip->getIpAddress(), $allIps);
         $dnsMxIps = [];
         $dnsMxIpAddedServers = [];
 

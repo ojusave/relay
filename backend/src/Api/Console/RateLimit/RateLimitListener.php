@@ -18,7 +18,6 @@ use Symfony\Component\RateLimiter\LimiterInterface;
 #[AsEventListener(event: KernelEvents::RESPONSE, method: 'onResponse')]
 class RateLimitListener
 {
-
     public function __construct(
         private RateLimit $rateLimit,
         private RateLimiterProvider $rateLimiterProvider,

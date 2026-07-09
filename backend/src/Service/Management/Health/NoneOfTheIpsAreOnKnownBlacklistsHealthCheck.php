@@ -9,7 +9,6 @@ use App\Service\Ip\IpAddressService;
 
 class NoneOfTheIpsAreOnKnownBlacklistsHealthCheck extends HealthCheckAbstract
 {
-
     public function __construct(
         private IpAddressService $ipAddressService,
         private DnsblQuery $dnsblQuery

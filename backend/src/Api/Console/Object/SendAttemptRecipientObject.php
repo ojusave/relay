@@ -7,7 +7,6 @@ use App\Entity\Type\SendRecipientStatus;
 
 class SendAttemptRecipientObject
 {
-
     public int $id;
     public int $created_at;
     public int $recipient_id;

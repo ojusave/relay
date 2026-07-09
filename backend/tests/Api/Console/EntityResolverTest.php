@@ -19,7 +19,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 #[CoversClass(EntityResolver::class)]
 class EntityResolverTest extends KernelTestCase
 {
-
     private function getEntityResolver(): EntityResolver
     {
         $resolver = $this->container->get(EntityResolver::class);

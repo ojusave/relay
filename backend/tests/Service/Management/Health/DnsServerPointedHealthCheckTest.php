@@ -19,7 +19,6 @@ use PHPUnit\Framework\Attributes\TestWith;
 #[CoversClass(DnsServerCorrectlyPointedEvent::class)]
 class DnsServerPointedHealthCheckTest extends KernelTestCase
 {
-
     public function test_when_dns_check_fail(): void
     {
         $dnsResolver = $this->createMock(DnsResolveInterface::class);

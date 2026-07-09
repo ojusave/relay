@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(ServerIp::class)]
 class ServerIpTest extends TestCase
 {
-
     public function test_get_public_ips(): void
     {
         $ipService = new ServerIp();

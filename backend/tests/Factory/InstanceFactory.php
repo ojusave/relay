@@ -10,7 +10,6 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
  */
 final class InstanceFactory extends PersistentProxyObjectFactory
 {
-
     public function __construct()
     {
         parent::__construct();
