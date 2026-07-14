@@ -72,6 +72,9 @@ class DefaultSchedule implements ScheduleProviderInterface
             // tls certificate renewal
             ->add(RecurringMessage::every('1 day', new CheckMailCertificateValidityMessage))
 
+            // ip warmup daily reset
+            ->add(RecurringMessage::cron('0 0 * * *', new ResetIpWarmupMessage))
+
             // global lock
             ->lock($this->lockFactory->createLock('global-schedule', 20))
 

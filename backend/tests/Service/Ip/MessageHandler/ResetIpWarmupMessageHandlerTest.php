@@ -28,11 +28,12 @@ class ResetIpWarmupMessageHandlerTest extends KernelTestCase
 
         $warmup = WarmupScheduleFactory::createOne([
             'ipAddress' => $ip,
-            'warmup_status' => WarmupStatus::WARMING,
-            'warmup_started_date' => new \DateTimeImmutable('-1 day', new \DateTimeZone('UTC')),
-            'warmup_schedule' => $schedule,
-            'warmup_sent_today' => 50,
-            'warmup_max_today' => 100,
+            'status' => WarmupStatus::WARMING,
+            'started_date' => new \DateTimeImmutable('-1 day', new \DateTimeZone('UTC')),
+            'schedule' => $schedule,
+            'sent_today' => 50,
+            'max_today' => 100,
+            'results' => [],
         ]);
 
         $transport = $this->transport(MessageTransport::ASYNC);
@@ -41,9 +42,10 @@ class ResetIpWarmupMessageHandlerTest extends KernelTestCase
 
         refresh($warmup);
 
-        $this->assertSame(0, $warmup->getWarmupSentToday());
-        $this->assertSame(200, $warmup->getWarmupMaxToday());
-        $this->assertSame(WarmupStatus::WARMING, $warmup->getWarmupStatus());
+        $this->assertSame(0, $warmup->getSentToday());
+        $this->assertSame(200, $warmup->getMaxToday());
+        $this->assertSame(WarmupStatus::WARMING, $warmup->getStatus());
+        $this->assertSame([50], $warmup->getResults());
     }
 
     public function test_auto_transitions_to_warmed_after_day_30(): void
@@ -54,11 +56,12 @@ class ResetIpWarmupMessageHandlerTest extends KernelTestCase
 
         $warmup = WarmupScheduleFactory::createOne([
             'ipAddress' => $ip,
-            'warmup_status' => WarmupStatus::WARMING,
-            'warmup_started_date' => new \DateTimeImmutable('-31 days', new \DateTimeZone('UTC')),
-            'warmup_schedule' => $schedule,
-            'warmup_sent_today' => 50,
-            'warmup_max_today' => 100,
+            'status' => WarmupStatus::WARMING,
+            'started_date' => new \DateTimeImmutable('-31 days', new \DateTimeZone('UTC')),
+            'schedule' => $schedule,
+            'sent_today' => 50,
+            'max_today' => 100,
+            'results' => [],
         ]);
 
         $transport = $this->transport(MessageTransport::ASYNC);
@@ -67,9 +70,10 @@ class ResetIpWarmupMessageHandlerTest extends KernelTestCase
 
         refresh($warmup);
 
-        $this->assertSame(WarmupStatus::WARMED, $warmup->getWarmupStatus());
-        $this->assertSame(0, $warmup->getWarmupMaxToday());
-        $this->assertSame(0, $warmup->getWarmupSentToday());
+        $this->assertSame(WarmupStatus::WARMED, $warmup->getStatus());
+        $this->assertSame(0, $warmup->getMaxToday());
+        $this->assertSame(0, $warmup->getSentToday());
+        $this->assertSame([50], $warmup->getResults());
     }
 
     public function test_sets_day_0_max_on_first_day(): void
@@ -81,11 +85,12 @@ class ResetIpWarmupMessageHandlerTest extends KernelTestCase
 
         $warmup = WarmupScheduleFactory::createOne([
             'ipAddress' => $ip,
-            'warmup_status' => WarmupStatus::WARMING,
-            'warmup_started_date' => new \DateTimeImmutable('today', new \DateTimeZone('UTC')),
-            'warmup_schedule' => $schedule,
-            'warmup_sent_today' => 25,
-            'warmup_max_today' => 0,
+            'status' => WarmupStatus::WARMING,
+            'started_date' => new \DateTimeImmutable('today', new \DateTimeZone('UTC')),
+            'schedule' => $schedule,
+            'sent_today' => 25,
+            'max_today' => 0,
+            'results' => [],
         ]);
 
         $transport = $this->transport(MessageTransport::ASYNC);
@@ -94,29 +99,9 @@ class ResetIpWarmupMessageHandlerTest extends KernelTestCase
 
         refresh($warmup);
 
-        $this->assertSame(0, $warmup->getWarmupSentToday());
-        $this->assertSame(50, $warmup->getWarmupMaxToday());
-    }
-
-    public function test_ignores_ips_without_schedule_or_started_date(): void
-    {
-        $ip = IpAddressFactory::createOne();
-
-        $warmup = WarmupScheduleFactory::createOne([
-            'ipAddress' => $ip,
-            'warmup_status' => WarmupStatus::WARMING,
-            'warmup_started_date' => null,
-            'warmup_schedule' => null,
-            'warmup_sent_today' => 50,
-        ]);
-
-        $transport = $this->transport(MessageTransport::ASYNC);
-        $transport->send(new ResetIpWarmupMessage());
-        $transport->throwExceptions()->process();
-
-        refresh($warmup);
-
-        $this->assertSame(50, $warmup->getWarmupSentToday());
+        $this->assertSame(0, $warmup->getSentToday());
+        $this->assertSame(50, $warmup->getMaxToday());
+        $this->assertSame([25], $warmup->getResults());
     }
 
     public function test_ignores_warmed_ips(): void
@@ -125,10 +110,10 @@ class ResetIpWarmupMessageHandlerTest extends KernelTestCase
 
         $warmup = WarmupScheduleFactory::createOne([
             'ipAddress' => $ip,
-            'warmup_status' => WarmupStatus::WARMED,
-            'warmup_started_date' => null,
-            'warmup_schedule' => null,
-            'warmup_sent_today' => 50,
+            'status' => WarmupStatus::WARMED,
+            'started_date' => new \DateTimeImmutable('2026-05-01'),
+            'schedule' => array_fill(0, 30, 100),
+            'sent_today' => 50,
         ]);
 
         $transport = $this->transport(MessageTransport::ASYNC);
@@ -137,7 +122,33 @@ class ResetIpWarmupMessageHandlerTest extends KernelTestCase
 
         refresh($warmup);
 
-        $this->assertSame(50, $warmup->getWarmupSentToday());
+        $this->assertSame(50, $warmup->getSentToday());
+    }
+
+    public function test_appends_results_on_each_reset(): void
+    {
+        $schedule = array_fill(0, 30, 100);
+        $schedule[1] = 200;
+
+        $ip = IpAddressFactory::createOne();
+
+        $warmup = WarmupScheduleFactory::createOne([
+            'ipAddress' => $ip,
+            'status' => WarmupStatus::WARMING,
+            'started_date' => new \DateTimeImmutable('-1 day', new \DateTimeZone('UTC')),
+            'schedule' => $schedule,
+            'sent_today' => 75,
+            'max_today' => 100,
+            'results' => [42],
+        ]);
+
+        $transport = $this->transport(MessageTransport::ASYNC);
+        $transport->send(new ResetIpWarmupMessage());
+        $transport->throwExceptions()->process();
+
+        refresh($warmup);
+
+        $this->assertSame([42, 75], $warmup->getResults());
     }
 
 }

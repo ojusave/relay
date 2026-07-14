@@ -51,6 +51,8 @@ class SendService
 
         $qb
             ->distinct()
+            ->leftJoin('s.ip_address', 'ip')
+            ->addSelect('ip')
             ->setMaxResults($limit)
             ->orderBy('s.id', 'DESC');
 

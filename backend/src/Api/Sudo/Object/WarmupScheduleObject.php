@@ -9,26 +9,30 @@ class WarmupScheduleObject
 {
 
     public int $id;
-    public WarmupStatus $warmup_status;
-    public ?int $warmup_started_date;
-    public int $warmup_sent_today;
-    public int $warmup_max_today;
-    /** @var array<int>|null */
-    public ?array $warmup_schedule;
+    public int $ip_address_id;
+    public WarmupStatus $status;
+    public int $started_date;
+    public int $sent_today;
+    public int $max_today;
+    /** @var array<int> */
+    public array $schedule;
+    /** @var array<int> */
+    public array $results;
     public int $created_at;
-    public bool $is_warming_up;
+    public int $updated_at;
 
     public function __construct(WarmupSchedule $schedule)
     {
         $this->id = $schedule->getId();
-        $this->warmup_status = $schedule->getWarmupStatus();
-        $startedDate = $schedule->getWarmupStartedDate();
-        $this->warmup_started_date = $startedDate ? $startedDate->getTimestamp() : null;
-        $this->warmup_sent_today = $schedule->getWarmupSentToday();
-        $this->warmup_max_today = $schedule->getWarmupMaxToday();
-        $this->warmup_schedule = $schedule->getWarmupSchedule();
+        $this->ip_address_id = $schedule->getIpAddress()->getId();
+        $this->status = $schedule->getStatus();
+        $this->started_date = $schedule->getStartedDate()->getTimestamp();
+        $this->sent_today = $schedule->getSentToday();
+        $this->max_today = $schedule->getMaxToday();
+        $this->schedule = $schedule->getSchedule();
+        $this->results = $schedule->getResults();
         $this->created_at = $schedule->getCreatedAt()->getTimestamp();
-        $this->is_warming_up = $schedule->isWarmingUp();
+        $this->updated_at = $schedule->getUpdatedAt()->getTimestamp();
     }
 
 }

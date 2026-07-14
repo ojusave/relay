@@ -4,10 +4,10 @@ namespace App\Api\Sudo\Controller;
 
 use App\Api\Sudo\Input\UpdateIpAddressInput;
 use App\Api\Sudo\Object\IpAddressObject;
-use App\Api\Sudo\Object\WarmupScheduleObject;
 use App\Service\App\Config;
 use App\Service\Ip\Dto\UpdateIpAddressDto;
 use App\Service\Ip\IpAddressService;
+use App\Service\Ip\WarmupScheduleService;
 use App\Service\Queue\QueueService;
 use App\Service\Sudo\SudoPermission;
 use Hyvor\Internal\Bundle\Api\SudoPermissionRequired;
@@ -25,6 +25,7 @@ class IpAddressController extends AbstractController
         private IpAddressService $ipAddressService,
         private QueueService $queueService,
         private Config $appConfig,
+        private WarmupScheduleService $warmupScheduleService,
     ) {}
 
     #[Route('/ip-addresses', methods: 'GET')]
@@ -33,7 +34,11 @@ class IpAddressController extends AbstractController
         $ipAddresses = $this->ipAddressService->getAllIpAddresses();
 
         $ipAddressObjects = array_map(
-            fn($ipAddress) => new IpAddressObject($ipAddress, $this->appConfig->getInstanceDomain()),
+            fn($ipAddress) => new IpAddressObject(
+                $ipAddress,
+                $this->appConfig->getInstanceDomain(),
+                $this->warmupScheduleService->getCurrentWarmupSchedule($ipAddress),
+            ),
             $ipAddresses
         );
 
@@ -62,33 +67,12 @@ class IpAddressController extends AbstractController
             }
         }
 
-        if ($input->hasProperty('warmup_schedule')) {
-            $updates->warmup_schedule = $input->warmup_schedule;
-        }
-
-        if ($input->hasProperty('warmup_status')) {
-            $updates->warmup_status = $input->warmup_status;
-        }
-
         $ipAddress = $this->ipAddressService->updateIpAddress($ipAddress, $updates);
 
-        return $this->json(new IpAddressObject($ipAddress, $this->appConfig->getInstanceDomain()));
-    }
-
-    #[Route('/ip-addresses/{id}/warmup-schedules', methods: 'GET')]
-    public function getWarmupSchedules(int $id): JsonResponse
-    {
-        $ipAddress = $this->ipAddressService->getIpAddressById($id);
-
-        if (!$ipAddress) {
-            throw new BadRequestHttpException("IP address with ID '$id' does not exist.");
-        }
-
-        $scheduleObjects = array_map(
-            fn($schedule) => new WarmupScheduleObject($schedule),
-            $ipAddress->getWarmupSchedules()->toArray()
-        );
-
-        return $this->json($scheduleObjects);
+        return $this->json(new IpAddressObject(
+            $ipAddress,
+            $this->appConfig->getInstanceDomain(),
+            $this->warmupScheduleService->getCurrentWarmupSchedule($ipAddress),
+        ));
     }
 }

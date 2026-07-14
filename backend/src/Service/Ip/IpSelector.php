@@ -5,6 +5,7 @@ namespace App\Service\Ip;
 use App\Entity\IpAddress;
 use App\Entity\Queue;
 use App\Entity\Type\WarmupStatus;
+use App\Entity\WarmupSchedule;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class IpSelector
@@ -19,15 +20,11 @@ readonly class IpSelector
         $ips = $this->em->createQuery('
                 SELECT ip, ws
                 FROM App\Entity\IpAddress ip
-                LEFT JOIN ip.warmupSchedules ws
-                WITH ws.created_at = (
-                    SELECT MAX(ws2.created_at)
-                    FROM App\Entity\WarmupSchedule ws2
-                    WHERE ws2.ip_address = ip.id
-                )
+                LEFT JOIN ip.warmupSchedules ws WITH ws.status = :warmingStatus
                 WHERE ip.queue = :queue
             ')
             ->setParameter('queue', $queue)
+            ->setParameter('warmingStatus', WarmupStatus::WARMING)
             ->getResult();
 
         if (empty($ips)) {
@@ -39,23 +36,18 @@ readonly class IpSelector
         $conn = $this->em->getConnection();
 
         foreach ($ips as $ip) {
-            $warmup = $ip->getCurrentWarmupSchedule();
+            $warmupSchedules = $ip->getWarmupSchedules();
+            $warmup = $warmupSchedules->isEmpty() ? null : $warmupSchedules->first();
 
-            if ($warmup?->isWarmingUp()) {
-                $rows = $conn->executeStatement(
-                    'UPDATE warmup_schedules
-                     SET warmup_sent_today = warmup_sent_today + :count
-                     WHERE ip_address_id = :id
-                       AND warmup_status = :status
-                       AND warmup_sent_today + :count <= warmup_max_today',
-                    [
-                        'count' => $recipientCount,
-                        'id' => $ip->getId(),
-                        'status' => WarmupStatus::WARMING->value,
-                    ]
-                );
-
-                if ($rows > 0) {
+            if ($warmup instanceof WarmupSchedule && $warmup->getStatus() === WarmupStatus::WARMING) {
+                if ($warmup->getSentToday() + $recipientCount <= $warmup->getMaxToday()) {
+                    $conn->executeStatement(
+                        'UPDATE warmup_schedules SET sent_today = sent_today + :count WHERE id = :id',
+                        [
+                            'count' => $recipientCount,
+                            'id' => $warmup->getId(),
+                        ]
+                    );
                     return $ip;
                 }
 			} else {

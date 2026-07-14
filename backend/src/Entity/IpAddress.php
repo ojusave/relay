@@ -144,10 +144,4 @@ class IpAddress
     {
         return $this->warmupSchedules;
     }
-
-    public function getCurrentWarmupSchedule(): ?WarmupSchedule
-    {
-        $latest = $this->warmupSchedules->last();
-        return $latest !== false ? $latest : null;
-    }
 }

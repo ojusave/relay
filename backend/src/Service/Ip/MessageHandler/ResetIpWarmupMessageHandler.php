@@ -20,30 +20,29 @@ class ResetIpWarmupMessageHandler
     {
         /** @var WarmupSchedule[] $schedules */
         $schedules = $this->em->getRepository(WarmupSchedule::class)->findBy([
-            'warmup_status' => WarmupStatus::WARMING,
+            'status' => WarmupStatus::WARMING,
         ]);
 
         $now = new \DateTimeImmutable('today', new \DateTimeZone('UTC'));
 
         foreach ($schedules as $schedule) {
-            $startedDate = $schedule->getWarmupStartedDate();
-            $plan = $schedule->getWarmupSchedule();
+            $startedDate = $schedule->getStartedDate();
+            $plan = $schedule->getSchedule();
 
-            if ($startedDate === null || $plan === null) {
-                continue;
-            }
+            $schedule->appendResult($schedule->getSentToday());
 
-            $schedule->setWarmupSentToday(0);
+            $schedule->setSentToday(0);
 
             $dayIndex = (int) $startedDate->setTime(0, 0)->diff($now)->days;
 
             if ($dayIndex >= 30) {
-                $schedule->setWarmupStatus(WarmupStatus::WARMED);
-                $schedule->setWarmupMaxToday(0);
+                $schedule->setStatus(WarmupStatus::WARMED);
+                $schedule->setMaxToday(0);
             } else {
-                $schedule->setWarmupMaxToday($plan[$dayIndex] ?? 0);
+                $schedule->setMaxToday($plan[$dayIndex] ?? 0);
             }
 
+            $schedule->setUpdatedAt($now);
             $this->em->persist($schedule);
         }
 

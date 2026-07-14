@@ -3,6 +3,7 @@
 namespace App\Api\Sudo\Object;
 
 use App\Entity\IpAddress;
+use App\Entity\WarmupSchedule;
 use App\Service\Ip\Ptr;
 
 class IpAddressObject
@@ -18,7 +19,7 @@ class IpAddressObject
     public bool $is_ptr_reverse_valid = false;
     public ?WarmupScheduleObject $currentWarmupSchedule = null;
 
-    public function __construct(IpAddress $ipAddress, string $instanceDomain)
+    public function __construct(IpAddress $ipAddress, string $instanceDomain, ?WarmupSchedule $currentWarmup = null)
     {
         $this->id = $ipAddress->getId();
         $this->created_at = $ipAddress->getCreatedAt()->getTimestamp();
@@ -30,8 +31,7 @@ class IpAddressObject
         $this->is_ptr_forward_valid = $ipAddress->getIsPtrForwardValid();
         $this->is_ptr_reverse_valid = $ipAddress->getIsPtrReverseValid();
 
-        $warmup = $ipAddress->getCurrentWarmupSchedule();
-        $this->currentWarmupSchedule = $warmup ? new WarmupScheduleObject($warmup) : null;
+        $this->currentWarmupSchedule = $currentWarmup ? new WarmupScheduleObject($currentWarmup) : null;
     }
 
 }

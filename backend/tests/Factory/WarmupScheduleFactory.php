@@ -2,6 +2,7 @@
 
 namespace App\Tests\Factory;
 
+use App\Entity\Type\WarmupStatus;
 use App\Entity\WarmupSchedule;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
@@ -28,6 +29,13 @@ final class WarmupScheduleFactory extends PersistentProxyObjectFactory
     {
         return [
             'created_at' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'updated_at' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'status' => WarmupStatus::WARMING,
+            'started_date' => new \DateTimeImmutable('today'),
+            'sent_today' => 0,
+            'max_today' => 0,
+            'schedule' => array_fill(0, 30, 100),
+            'results' => [],
         ];
     }
 

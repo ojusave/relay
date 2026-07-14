@@ -7,6 +7,7 @@ use App\Entity\SendRecipient;
 use App\Entity\Type\SendRecipientStatus;
 use App\Entity\Type\WarmupStatus;
 use App\Service\Ip\IpAddressService;
+use App\Service\Ip\WarmupScheduleService;
 use App\Service\Send\Message\RouteQueueNullIpsToIpMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -17,6 +18,7 @@ class RouteQueueNullIpsToIpMessageHandler
 
     public function __construct(
         private IpAddressService $ipAddressService,
+        private WarmupScheduleService $warmupScheduleService,
         private EntityManagerInterface $em,
     ) {
     }
@@ -35,7 +37,7 @@ class RouteQueueNullIpsToIpMessageHandler
             return;
         }
 
-        $warmup = $ipAddress->getCurrentWarmupSchedule();
+        $warmup = $this->warmupScheduleService->getCurrentWarmupSchedule($ipAddress);
 
         $sends = $this->em->getRepository(Send::class)->findBy([
             'queue' => $queue,
@@ -52,22 +54,20 @@ class RouteQueueNullIpsToIpMessageHandler
                 continue;
             }
 
-            if ($warmup === null || !$warmup->isWarmingUp()) {
+            if ($warmup === null || $warmup->getStatus() !== WarmupStatus::WARMING) {
                 $send->setIpAddress($ipAddress);
                 continue;
             }
 
-            $conn = $this->em->getConnection();
-            $rows = $conn->executeStatement(
-                'UPDATE warmup_schedules SET warmup_sent_today = warmup_sent_today + :count WHERE ip_address_id = :id AND warmup_status = :status AND warmup_sent_today + :count <= warmup_max_today',
-                [
-                    'count' => $recipientCount,
-                    'id' => $ipAddress->getId(),
-                    'status' => WarmupStatus::WARMING->value,
-                ]
-            );
-
-            if ($rows > 0) {
+            if ($warmup->getSentToday() + $recipientCount <= $warmup->getMaxToday()) {
+                $conn = $this->em->getConnection();
+                $conn->executeStatement(
+                    'UPDATE warmup_schedules SET sent_today = sent_today + :count WHERE id = :id',
+                    [
+                        'count' => $recipientCount,
+                        'id' => $warmup->getId(),
+                    ]
+                );
                 $send->setIpAddress($ipAddress);
             }
         }

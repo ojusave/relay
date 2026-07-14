@@ -14,30 +14,39 @@ class WarmupSchedule
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\ManyToOne(targetEntity: IpAddress::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: IpAddress::class, inversedBy: 'warmupSchedules')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private IpAddress $ip_address;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $created_at;
 
+    #[ORM\Column(type: 'datetime_immutable')]
+    private \DateTimeImmutable $updated_at;
+
     #[ORM\Column(type: 'string', enumType: WarmupStatus::class)]
-    private WarmupStatus $warmup_status = WarmupStatus::WARMING;
+    private WarmupStatus $status = WarmupStatus::WARMING;
 
-    #[ORM\Column(type: 'date_immutable', nullable: true)]
-    private ?\DateTimeImmutable $warmup_started_date = null;
+    #[ORM\Column(type: 'date_immutable')]
+    private \DateTimeImmutable $started_date;
+
+    #[ORM\Column(type: 'integer')]
+    private int $sent_today;
 
     #[ORM\Column(type: 'integer', options: ['default' => 0])]
-    private int $warmup_sent_today = 0;
-
-    #[ORM\Column(type: 'integer', options: ['default' => 0])]
-    private int $warmup_max_today = 0;
+    private int $max_today = 0;
 
     /**
-     * @var array<int>|null
+     * @var array<int>
      */
-    #[ORM\Column(type: 'json', nullable: true)]
-    private ?array $warmup_schedule = null;
+    #[ORM\Column(type: 'json')]
+    private array $schedule;
+
+    /**
+     * @var array<int>
+     */
+    #[ORM\Column(type: 'json', options: ['default' => '[]'])]
+    private array $results = [];
 
     public function __construct(IpAddress $ipAddress)
     {
@@ -71,71 +80,98 @@ class WarmupSchedule
         return $this;
     }
 
-    public function getWarmupStatus(): WarmupStatus
+    public function getUpdatedAt(): \DateTimeImmutable
     {
-        return $this->warmup_status;
+        return $this->updated_at;
     }
 
-    public function setWarmupStatus(WarmupStatus $warmupStatus): static
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
-        $this->warmup_status = $warmupStatus;
+        $this->updated_at = $updatedAt;
         return $this;
     }
 
-    public function getWarmupStartedDate(): ?\DateTimeImmutable
+    public function getStatus(): WarmupStatus
     {
-        return $this->warmup_started_date;
+        return $this->status;
     }
 
-    public function setWarmupStartedDate(?\DateTimeImmutable $warmupStartedDate): static
+    public function setStatus(WarmupStatus $status): static
     {
-        $this->warmup_started_date = $warmupStartedDate;
+        $this->status = $status;
         return $this;
     }
 
-    public function getWarmupSentToday(): int
+    public function getStartedDate(): \DateTimeImmutable
     {
-        return $this->warmup_sent_today;
+        return $this->started_date;
     }
 
-    public function setWarmupSentToday(int $warmupSentToday): static
+    public function setStartedDate(\DateTimeImmutable $startedDate): static
     {
-        $this->warmup_sent_today = $warmupSentToday;
+        $this->started_date = $startedDate;
         return $this;
     }
 
-    public function getWarmupMaxToday(): int
+    public function getSentToday(): int
     {
-        return $this->warmup_max_today;
+        return $this->sent_today;
     }
 
-    public function setWarmupMaxToday(int $warmupMaxToday): static
+    public function setSentToday(int $sentToday): static
     {
-        $this->warmup_max_today = $warmupMaxToday;
+        $this->sent_today = $sentToday;
+        return $this;
+    }
+
+    public function getMaxToday(): int
+    {
+        return $this->max_today;
+    }
+
+    public function setMaxToday(int $maxToday): static
+    {
+        $this->max_today = $maxToday;
         return $this;
     }
 
     /**
-     * @return array<int>|null
+     * @return array<int>
      */
-    public function getWarmupSchedule(): ?array
+    public function getSchedule(): array
     {
-        return $this->warmup_schedule;
+        return $this->schedule;
     }
 
     /**
-     * @param array<int>|null $warmupSchedule
+     * @param array<int> $schedule
      */
-    public function setWarmupSchedule(?array $warmupSchedule): static
+    public function setSchedule(array $schedule): static
     {
-        $this->warmup_schedule = $warmupSchedule;
+        $this->schedule = $schedule;
         return $this;
     }
 
-    public function isWarmingUp(): bool
+    /**
+     * @return array<int>
+     */
+    public function getResults(): array
     {
-        return $this->warmup_status === WarmupStatus::WARMING
-            && $this->warmup_started_date !== null
-            && $this->warmup_schedule !== null;
+        return $this->results;
+    }
+
+    /**
+     * @param array<int> $results
+     */
+    public function setResults(array $results): static
+    {
+        $this->results = $results;
+        return $this;
+    }
+
+    public function appendResult(int $value): static
+    {
+        $this->results[] = $value;
+        return $this;
     }
 }

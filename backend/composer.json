@@ -14,6 +14,7 @@
         "doctrine/doctrine-bundle": "^2.18.2",
         "doctrine/doctrine-migrations-bundle": "^3.7.0",
         "doctrine/orm": "^3.6.3",
+        "dragonmantank/cron-expression": "^3.6",
         "egulias/email-validator": "^4.0.4",
         "hyvor/internal": "^4.0.11",
         "mlocati/spf-lib": "^3.3",
