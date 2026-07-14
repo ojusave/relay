@@ -78,38 +78,36 @@
 					<div class="entry-header">
 						<span class="entry-title">Schedule #{schedules.length - i}</span>
 						<span class="entry-date">{formatDate(schedule.created_at)}</span>
-						{#if schedule.is_warming_up}
+						{#if schedule.status === 'warming'}
 							<Tag color="orange" size="small">Warming</Tag>
 						{:else}
 							<Tag color="green" size="small">Warmed</Tag>
 						{/if}
 					</div>
 
-					{#if schedule.warmup_started_date}
-						<div class="entry-detail">
-							Started: {formatDate(schedule.warmup_started_date)}
-						</div>
-					{/if}
+					<div class="entry-detail">
+						Started: {formatDate(schedule.started_date)}
+					</div>
 
 					<div class="entry-stats">
 						<DetailCards min={120}>
 							<DetailCard label="Today's Sends">
-								{formatNumber(schedule.warmup_sent_today)}
+								{formatNumber(schedule.sent_today)}
 							</DetailCard>
 							<DetailCard label="Daily Max">
-								{formatNumber(schedule.warmup_max_today)}
+								{formatNumber(schedule.max_today)}
 							</DetailCard>
 							<DetailCard label="Status">
-								{schedule.warmup_status}
+								{schedule.status}
 							</DetailCard>
 						</DetailCards>
 					</div>
 
-					{#if schedule.warmup_schedule && schedule.warmup_schedule.length > 0}
+					{#if schedule.schedule && schedule.schedule.length > 0}
 						<div class="accordion-wrapper">
 							<Accordion title="View 30-Day Schedule">
 								<div class="schedule-grid">
-									{#each schedule.warmup_schedule as value, day (day)}
+									{#each schedule.schedule as value, day (day)}
 										<div class="day-cell">
 											<span class="day-label">Day {day + 1}</span>
 											<span class="day-value">{formatNumber(value)}</span>

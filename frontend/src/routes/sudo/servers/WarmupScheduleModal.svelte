@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Modal, Button, TextInput } from '@hyvor/design/components';
-	import { updateIpAddress } from '../sudoActions';
+	import { createWarmupSchedule } from '../sudoActions';
 	import { ipAddressesStore } from '../sudoStore';
 	import { toast } from '@hyvor/design/components';
 	import type { IpAddress } from '../sudoTypes';
@@ -26,8 +26,8 @@
 	let loading = $state(false);
 
 	function initSchedule() {
-		if (ip?.currentWarmupSchedule?.warmup_schedule?.length === 30) {
-			schedule = [...ip.currentWarmupSchedule.warmup_schedule];
+		if (ip?.currentWarmupSchedule?.schedule?.length === 30) {
+			schedule = [...ip.currentWarmupSchedule.schedule];
 		} else {
 			schedule = Array(30).fill(0);
 		}
@@ -77,10 +77,12 @@
 
 		loading = true;
 		try {
-			const updatedIp = await updateIpAddress(ip.id, {
-				warmup_schedule: schedule,
-				warmup_status: 'warming'
-			});
+			const updatedWarmup = await createWarmupSchedule(ip.id, schedule);
+
+			const updatedIp: IpAddress = {
+				...ip,
+				currentWarmupSchedule: updatedWarmup
+			};
 
 			ipAddressesStore.update((ips) =>
 				ips.map((existingIp) => (existingIp.id === ip.id ? updatedIp : existingIp))

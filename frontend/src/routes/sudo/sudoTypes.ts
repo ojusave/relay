@@ -224,10 +224,13 @@ export interface SudoProjectResponse {
 
 export interface WarmupSchedule {
 	id: number;
-	warmup_status: 'warming' | 'warmed';
-	warmup_started_date: number | null;
-	warmup_sent_today: number;
-	warmup_max_today: number;
-	warmup_schedule: number[] | null;
+	status: 'warming' | 'warmed';
+	started_date: number;
+	sent_today: number;
+	max_today: number;
+	schedule: number[];
+	results: number[];
 	created_at: number;
+	updated_at: number;
+	ip_address_id: number;
 }

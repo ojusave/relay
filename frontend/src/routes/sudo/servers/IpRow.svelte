@@ -6,7 +6,7 @@
 	import WarmupScheduleModal from './WarmupScheduleModal.svelte';
 	import WarmupScheduleHistoryModal from './WarmupScheduleHistoryModal.svelte';
 	import IpPtrStatus from './IpPtrStatus.svelte';
-	import { updateIpAddress } from '../sudoActions';
+	import { updateWarmupSchedule } from '../sudoActions';
 	import { ipAddressesStore } from '../sudoStore';
 	import { toast } from '@hyvor/design/components';
 
@@ -41,10 +41,17 @@
 	}
 
 	async function handleCancelWarmup() {
+		if (!ip.currentWarmupSchedule) return;
+
 		try {
-			const updatedIp = await updateIpAddress(ip.id, {
-				warmup_status: 'warmed'
+			const updatedWarmup = await updateWarmupSchedule(ip.currentWarmupSchedule.id, {
+				status: 'warmed'
 			});
+
+			const updatedIp = {
+				...ip,
+				currentWarmupSchedule: updatedWarmup
+			};
 
 			ipAddressesStore.update((ips) =>
 				ips.map((existingIp) => (existingIp.id === ip.id ? updatedIp : existingIp))
@@ -98,11 +105,11 @@
 		</div>
 	</td>
 	<td class="warmup">
-		{#if ip.currentWarmupSchedule?.is_warming_up}
+		{#if ip.currentWarmupSchedule?.status === 'warming'}
 			<div class="warmup-info">
 				<Tag color="orange" size="small">Warming</Tag>
 				<span class="warmup-progress">
-					{ip.currentWarmupSchedule.warmup_sent_today.toLocaleString()} / {ip.currentWarmupSchedule.warmup_max_today.toLocaleString()}
+					{ip.currentWarmupSchedule.sent_today.toLocaleString()} / {ip.currentWarmupSchedule.max_today.toLocaleString()}
 				</span>
 			</div>
 			<div class="warmup-actions">

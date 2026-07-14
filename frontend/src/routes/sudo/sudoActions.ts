@@ -60,8 +60,6 @@ export function getQueues() {
 
 export function updateIpAddress(ipId: number, data: {
 	queue_id?: number | null;
-	warmup_status?: 'warming' | 'warmed';
-	warmup_schedule?: number[] | null;
 }) {
 	return sudoApi.patch<IpAddress>({
 		endpoint: `/ip-addresses/${ipId}`,
@@ -245,8 +243,35 @@ export function getProjectById(id: number) {
 	});
 }
 
-export function getWarmupSchedules(ipId: number) {
+export function getWarmupSchedules(ipAddressId?: number) {
 	return sudoApi.get<WarmupSchedule[]>({
-		endpoint: `/ip-addresses/${ipId}/warmup-schedules`
+		endpoint: '/warmup-schedules',
+		data: ipAddressId !== undefined ? { ip_address_id: ipAddressId } : undefined
+	});
+}
+
+export function createWarmupSchedule(ipAddressId: number, schedule: number[]) {
+	return sudoApi.post<WarmupSchedule>({
+		endpoint: '/warmup-schedules',
+		data: {
+			ip_address_id: ipAddressId,
+			schedule
+		}
+	});
+}
+
+export function updateWarmupSchedule(scheduleId: number, data: {
+	status?: 'warming' | 'warmed';
+	schedule?: number[];
+}) {
+	return sudoApi.patch<WarmupSchedule>({
+		endpoint: `/warmup-schedules/${scheduleId}`,
+		data
+	});
+}
+
+export function deleteWarmupSchedule(scheduleId: number) {
+	return sudoApi.delete({
+		endpoint: `/warmup-schedules/${scheduleId}`
 	});
 }
