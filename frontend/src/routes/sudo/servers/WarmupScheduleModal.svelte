@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Modal, Button, TextInput } from '@hyvor/design/components';
 	import { createWarmupSchedule } from '../sudoActions';
-	import { ipAddressesStore } from '../sudoStore';
+	import { ipAddressesStore, sudoConfigStore } from '../sudoStore';
 	import { toast } from '@hyvor/design/components';
 	import type { IpAddress } from '../sudoTypes';
 
@@ -13,14 +13,6 @@
 	}
 
 	let { show = $bindable(), ip, onClose, onUpdate }: Props = $props();
-
-	const DEFAULT_SCHEDULE = [
-		50, 100, 250, 500, 1000,
-		2500, 5000, 10000, 10000, 20000, 20000,
-		40000, 40000, 75000, 150000, 150000, 150000,
-		150000, 150000, 300000, 300000, 300000, 300000,
-		300000, 300000, 500000, 500000, 500000, 1000000, 1000000
-	];
 
 	let schedule = $state<number[]>([]);
 	let loading = $state(false);
@@ -62,7 +54,7 @@
 	}
 
 	function applyDefaultSchedule() {
-		schedule = [...DEFAULT_SCHEDULE];
+		schedule = [...$sudoConfigStore.default_warmup_schedule];
 	}
 
 	async function handleSave() {
@@ -109,11 +101,17 @@
 	}}
 	on:cancel={handleClose}
 	on:confirm={handleSave}
-	loading={loading}
+	{loading}
 >
 	<div class="modal-content">
 		<div class="actions">
-			<Button size="small" color="input" variant="outline" on:click={applyDefaultSchedule} disabled={loading}>
+			<Button
+				size="small"
+				color="input"
+				variant="outline"
+				on:click={applyDefaultSchedule}
+				disabled={loading}
+			>
 				Use Default Schedule
 			</Button>
 		</div>
@@ -125,7 +123,7 @@
 					<TextInput
 						id="day-{i}"
 						type="number"
-						value={value}
+						{value}
 						on:input={(e) => handleInputChange(i, e.currentTarget.value)}
 						block
 						disabled={loading}

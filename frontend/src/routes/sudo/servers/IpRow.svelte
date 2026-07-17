@@ -1,14 +1,12 @@
 <script lang="ts">
-	import { Button, Tag, Tooltip } from '@hyvor/design/components';
+	import { Button, Tooltip } from '@hyvor/design/components';
 	import type { IpAddress } from '../sudoTypes';
 	import IconExclamationCircle from '@hyvor/icons/IconExclamationCircle';
 	import QueueSelectModal from '../queues/QueueSelectModal.svelte';
 	import WarmupScheduleModal from './WarmupScheduleModal.svelte';
+	import WarmupScheduleManageModal from './WarmupScheduleManageModal.svelte';
 	import WarmupScheduleHistoryModal from './WarmupScheduleHistoryModal.svelte';
 	import IpPtrStatus from './IpPtrStatus.svelte';
-	import { updateWarmupSchedule } from '../sudoActions';
-	import { ipAddressesStore } from '../sudoStore';
-	import { toast } from '@hyvor/design/components';
 
 	interface Props {
 		ip: IpAddress;
@@ -18,7 +16,16 @@
 
 	let showQueueModal = $state(false);
 	let showWarmupModal = $state(false);
+	let showManageModal = $state(false);
 	let showHistoryModal = $state(false);
+
+	const TOTAL_DAYS = 30;
+
+	let warmup = $derived(ip.currentWarmupSchedule);
+	let isWarming = $derived(warmup?.status === 'warming');
+
+	let currentDay = $derived(warmup ? Math.min(warmup.results.length + 1, TOTAL_DAYS) : 0);
+	let progressPercentage = $derived(Math.round((currentDay / TOTAL_DAYS) * 100));
 
 	function handleQueueButtonClick() {
 		showQueueModal = true;
@@ -32,36 +39,16 @@
 		showWarmupModal = false;
 	}
 
+	function handleManageModalClose() {
+		showManageModal = false;
+	}
+
 	function handleHistoryModalClose() {
 		showHistoryModal = false;
 	}
 
 	function handleIpUpdate(updatedIp: IpAddress) {
 		ip = updatedIp;
-	}
-
-	async function handleCancelWarmup() {
-		if (!ip.currentWarmupSchedule) return;
-
-		try {
-			const updatedWarmup = await updateWarmupSchedule(ip.currentWarmupSchedule.id, {
-				status: 'warmed'
-			});
-
-			const updatedIp = {
-				...ip,
-				currentWarmupSchedule: updatedWarmup
-			};
-
-			ipAddressesStore.update((ips) =>
-				ips.map((existingIp) => (existingIp.id === ip.id ? updatedIp : existingIp))
-			);
-
-			ip = updatedIp;
-			toast.success(`Warmup cancelled for IP ${ip.ip_address}`);
-		} catch (error: any) {
-			toast.error('Failed to cancel warmup: ' + error.message);
-		}
 	}
 </script>
 
@@ -105,21 +92,24 @@
 		</div>
 	</td>
 	<td class="warmup">
-		{#if ip.currentWarmupSchedule?.status === 'warming'}
-			<div class="warmup-info">
-				<Tag color="orange" size="small">Warming</Tag>
-				<span class="warmup-progress">
-					{ip.currentWarmupSchedule.sent_today.toLocaleString()} / {ip.currentWarmupSchedule.max_today.toLocaleString()}
-				</span>
+		{#if isWarming && warmup}
+			<div class="warmup-day-progress">
+				<div class="warmup-day-label">
+					<span>Day {currentDay} of {TOTAL_DAYS}</span>
+					<span>{progressPercentage}%</span>
+				</div>
+				<div class="progress-track">
+					<div class="progress-fill" style="width: {progressPercentage}%"></div>
+				</div>
 			</div>
 			<div class="warmup-actions">
 				<Button
 					size="x-small"
-					color="red"
+					color="input"
 					variant="outline"
-					on:click={handleCancelWarmup}
+					on:click={() => (showManageModal = true)}
 				>
-					Cancel
+					Manage
 				</Button>
 				<Button
 					size="x-small"
@@ -131,19 +121,15 @@
 				</Button>
 			</div>
 		{:else}
-			<div class="warmup-info">
-				<Tag color="green" size="small">Warmed</Tag>
+			<div class="warmup-actions">
 				<Button
 					size="x-small"
 					color="input"
 					variant="outline"
 					on:click={() => (showWarmupModal = true)}
-					style="margin-left: 5px;"
 				>
-					Create Schedule
+					Start Warmup
 				</Button>
-			</div>
-			<div class="warmup-actions">
 				<Button
 					size="x-small"
 					color="input"
@@ -171,6 +157,15 @@
 		bind:show={showWarmupModal}
 		{ip}
 		onClose={handleWarmupModalClose}
+		onUpdate={handleIpUpdate}
+	/>
+{/if}
+
+{#if showManageModal}
+	<WarmupScheduleManageModal
+		bind:show={showManageModal}
+		{ip}
+		onClose={handleManageModalClose}
 		onUpdate={handleIpUpdate}
 	/>
 {/if}
@@ -208,20 +203,35 @@
 		white-space: nowrap;
 	}
 
-	.warmup-info {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		margin-bottom: 5px;
-	}
-
 	.warmup-actions {
 		display: flex;
 		gap: 4px;
 	}
 
-	.warmup-progress {
-		font-size: 13px;
+	.warmup-day-progress {
+		margin-bottom: 8px;
+		min-width: 160px;
+	}
+
+	.warmup-day-label {
+		display: flex;
+		justify-content: space-between;
+		font-size: 12px;
 		color: var(--text-light);
+		margin-bottom: 4px;
+	}
+
+	.progress-track {
+		height: 6px;
+		background: var(--bg-input);
+		border-radius: 3px;
+		overflow: hidden;
+	}
+
+	.progress-fill {
+		height: 100%;
+		background: var(--orange);
+		border-radius: 3px;
+		transition: width 0.2s ease;
 	}
 </style>

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import {
-		Modal, Accordion, Divider, Loader, DetailCard, DetailCards, Tag, toast
-	} from '@hyvor/design/components';
+	import { Modal, Loader, Tag, toast } from '@hyvor/design/components';
+	import IconChevronRight from '@hyvor/icons/IconChevronRight';
 	import { getWarmupSchedules } from '../sudoActions';
-	import type { IpAddress, WarmupSchedule } from '../sudoTypes';
+	import WarmupScheduleProgress from './WarmupScheduleProgress.svelte';
+	import type { IpAddress, WarmupSchedule, WarmupStatus } from '../sudoTypes';
 
 	interface Props {
 		show: boolean;
@@ -15,6 +15,9 @@
 
 	let schedules = $state<WarmupSchedule[]>([]);
 	let loading = $state(false);
+	let expanded = $state<number | null>(null);
+
+	const TOTAL_DAYS = 30;
 
 	$effect(() => {
 		if (show && ip) {
@@ -41,19 +44,29 @@
 		onClose();
 	}
 
+	function toggle(id: number) {
+		expanded = expanded === id ? null : id;
+	}
+
 	function formatDate(timestamp: number): string {
 		return new Date(timestamp * 1000).toLocaleDateString('en-US', {
 			year: 'numeric',
 			month: 'short',
-			day: 'numeric',
-			hour: '2-digit',
-			minute: '2-digit'
+			day: 'numeric'
 		});
 	}
 
-	function formatNumber(n: number): string {
-		return n.toLocaleString();
+	function endDate(schedule: WarmupSchedule): string {
+		const end = new Date(schedule.started_date * 1000);
+		end.setDate(end.getDate() + TOTAL_DAYS);
+		return formatDate(Math.floor(end.getTime() / 1000));
 	}
+
+	const statusColors: Record<WarmupStatus, 'orange' | 'green' | 'red'> = {
+		warming: 'orange',
+		warmed: 'green',
+		cancelled: 'red'
+	};
 </script>
 
 <Modal
@@ -65,7 +78,7 @@
 		confirm: false
 	}}
 	on:cancel={handleClose}
-	loading={loading}
+	{loading}
 >
 	<div class="modal-content">
 		{#if loading}
@@ -73,56 +86,29 @@
 		{:else if schedules.length === 0}
 			<div class="empty">No warmup schedules found for this IP.</div>
 		{:else}
-			{#each schedules as schedule, i}
-				<div class="schedule-entry">
-					<div class="entry-header">
-						<span class="entry-title">Schedule #{schedules.length - i}</span>
-						<span class="entry-date">{formatDate(schedule.created_at)}</span>
-						{#if schedule.status === 'warming'}
-							<Tag color="orange" size="small">Warming</Tag>
-						{:else}
-							<Tag color="green" size="small">Warmed</Tag>
+			<div class="rows">
+				{#each schedules as schedule (schedule.id)}
+					<div class="row" class:open={expanded === schedule.id}>
+						<button class="row-header" onclick={() => toggle(schedule.id)}>
+							<span class="chevron" class:rotated={expanded === schedule.id}>
+								<IconChevronRight size={14} />
+							</span>
+							<span class="row-dates">
+								{formatDate(schedule.started_date)} &ndash; {endDate(schedule)}
+							</span>
+							<Tag color={statusColors[schedule.status]} size="small">
+								{schedule.status}
+							</Tag>
+						</button>
+
+						{#if expanded === schedule.id}
+							<div class="row-body">
+								<WarmupScheduleProgress {schedule} />
+							</div>
 						{/if}
 					</div>
-
-					<div class="entry-detail">
-						Started: {formatDate(schedule.started_date)}
-					</div>
-
-					<div class="entry-stats">
-						<DetailCards min={120}>
-							<DetailCard label="Today's Sends">
-								{formatNumber(schedule.sent_today)}
-							</DetailCard>
-							<DetailCard label="Daily Max">
-								{formatNumber(schedule.max_today)}
-							</DetailCard>
-							<DetailCard label="Status">
-								{schedule.status}
-							</DetailCard>
-						</DetailCards>
-					</div>
-
-					{#if schedule.schedule && schedule.schedule.length > 0}
-						<div class="accordion-wrapper">
-							<Accordion title="View 30-Day Schedule">
-								<div class="schedule-grid">
-									{#each schedule.schedule as value, day (day)}
-										<div class="day-cell">
-											<span class="day-label">Day {day + 1}</span>
-											<span class="day-value">{formatNumber(value)}</span>
-										</div>
-									{/each}
-								</div>
-							</Accordion>
-						</div>
-					{/if}
-				</div>
-
-				{#if i < schedules.length - 1}
-					<Divider margin={16} />
-				{/if}
-			{/each}
+				{/each}
+			</div>
 		{/if}
 	</div>
 </Modal>
@@ -140,76 +126,52 @@
 		color: var(--text-light);
 	}
 
-	.schedule-entry {
-		padding: 16px 0;
-	}
-
-	.entry-header {
+	.rows {
 		display: flex;
-		align-items: center;
-		gap: 12px;
-		margin-bottom: 8px;
-	}
-
-	.entry-title {
-		font-weight: 600;
-		font-size: 16px;
-	}
-
-	.entry-date {
-		color: var(--text-light);
-		font-size: 13px;
-		flex: 1;
-	}
-
-	.entry-detail {
-		font-size: 13px;
-		color: var(--text-light);
-		margin-bottom: 12px;
-	}
-
-	.entry-stats {
-		margin-bottom: 12px;
-	}
-
-	.accordion-wrapper {
-		margin-top: 8px;
-	}
-
-	.schedule-grid {
-		display: grid;
-		grid-template-columns: repeat(5, 1fr);
+		flex-direction: column;
 		gap: 8px;
 	}
 
-	.day-cell {
+	.row {
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		overflow: hidden;
+	}
+
+	.row-header {
 		display: flex;
-		flex-direction: column;
 		align-items: center;
-		padding: 6px;
-		background: var(--bg-input);
-		border-radius: 6px;
-	}
-
-	.day-label {
-		font-size: 11px;
-		color: var(--text-light);
-	}
-
-	.day-value {
+		gap: 12px;
+		width: 100%;
+		padding: 12px 16px;
+		background: none;
+		border: none;
+		cursor: pointer;
+		text-align: left;
 		font-size: 14px;
-		font-weight: 600;
 	}
 
-	@media (max-width: 900px) {
-		.schedule-grid {
-			grid-template-columns: repeat(3, 1fr);
-		}
+	.row-header:hover {
+		background: var(--hover);
 	}
 
-	@media (max-width: 600px) {
-		.schedule-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
+	.chevron {
+		display: inline-flex;
+		color: var(--text-light);
+		transition: transform 0.15s ease;
+	}
+
+	.chevron.rotated {
+		transform: rotate(90deg);
+	}
+
+	.row-dates {
+		flex: 1;
+		font-weight: 500;
+	}
+
+	.row-body {
+		padding: 16px;
+		border-top: 1px solid var(--border);
 	}
 </style>
