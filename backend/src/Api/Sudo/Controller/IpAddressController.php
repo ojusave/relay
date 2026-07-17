@@ -32,12 +32,13 @@ class IpAddressController extends AbstractController
     public function getIpAddresses(): JsonResponse
     {
         $ipAddresses = $this->ipAddressService->getAllIpAddresses();
+        $warmupSchedules = $this->warmupScheduleService->getCurrentWarmupSchedulesByIpAddresses($ipAddresses);
 
         $ipAddressObjects = array_map(
             fn($ipAddress) => new IpAddressObject(
                 $ipAddress,
                 $this->appConfig->getInstanceDomain(),
-                $this->warmupScheduleService->getCurrentWarmupSchedule($ipAddress),
+                $warmupSchedules[$ipAddress->getId()] ?? null,
             ),
             $ipAddresses
         );

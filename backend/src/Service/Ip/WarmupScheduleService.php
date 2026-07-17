@@ -123,4 +123,25 @@ class WarmupScheduleService
             'status' => WarmupStatus::WARMING,
         ]);
     }
+
+    /**
+     * @param IpAddress[] $ipAddresses
+     * @return array<int, WarmupSchedule>
+     */
+    public function getCurrentWarmupSchedulesByIpAddresses(array $ipAddresses): array
+    {
+        if (empty($ipAddresses)) {
+            return [];
+        }
+
+        return $this->em->createQueryBuilder()
+            ->select('ws')
+            ->from(WarmupSchedule::class, 'ws', 'IDENTITY(ws.ip_address)')
+            ->where('ws.ip_address IN (:ipAddresses)')
+            ->andWhere('ws.status = :status')
+            ->setParameter('ipAddresses', $ipAddresses)
+            ->setParameter('status', WarmupStatus::WARMING)
+            ->getQuery()
+            ->getResult();
+    }
 }
