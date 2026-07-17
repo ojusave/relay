@@ -26,6 +26,7 @@ class IpAddressService
         private EventDispatcherInterface $ed,
         private Ptr $ptr,
         private QueueService $queueService,
+        private WarmupScheduleService $warmupScheduleService,
     ) {}
 
     /**
@@ -99,6 +100,11 @@ class IpAddressService
 
         $this->em->persist($ipAddressEntity);
         $this->em->flush();
+
+        $this->warmupScheduleService->createWarmupSchedule(
+            $ipAddressEntity,
+            WarmupScheduleService::DEFAULT_SCHEDULE,
+        );
 
         return $ipAddressEntity;
     }

@@ -6,4 +6,5 @@ enum WarmupStatus: string
 {
     case WARMING = 'warming';
     case WARMED = 'warmed';
+    case CANCELLED = 'cancelled';
 }

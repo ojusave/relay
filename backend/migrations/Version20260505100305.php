@@ -19,7 +19,7 @@ final class Version20260505100305 extends AbstractMigration
         $this->addSql('ALTER TABLE sends ADD ip_address_id INT DEFAULT NULL REFERENCES ip_addresses(id) ON DELETE SET NULL');
         $this->addSql('CREATE INDEX idx_sends_ip_address_id ON sends (ip_address_id)');
 
-        $this->addSql("CREATE TYPE warmup_status_enum AS ENUM('warming', 'warmed')");
+        $this->addSql("CREATE TYPE warmup_status_enum AS ENUM('warming', 'warmed', 'cancelled')");
 
         $this->addSql(
             "

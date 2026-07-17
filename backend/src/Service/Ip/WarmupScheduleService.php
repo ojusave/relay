@@ -14,6 +14,17 @@ class WarmupScheduleService
 
     use ClockAwareTrait;
 
+    /**
+     * @var array<int>
+     */
+    public const DEFAULT_SCHEDULE = [
+        50, 100, 250, 500, 1000,
+        2500, 5000, 10000, 10000, 20000, 20000,
+        40000, 40000, 75000, 150000, 150000, 150000,
+        150000, 150000, 300000, 300000, 300000, 300000,
+        300000, 300000, 500000, 500000, 500000, 1000000, 1000000,
+    ];
+
     public function __construct(
         private EntityManagerInterface $em,
     ) {}
@@ -86,7 +97,7 @@ class WarmupScheduleService
                 $warmup->setStartedDate($this->now()->setTime(0, 0));
                 $warmup->setSentToday(0);
                 $warmup->setMaxToday($warmup->getSchedule()[0]);
-            } elseif ($status === WarmupStatus::WARMED) {
+            } elseif ($status === WarmupStatus::WARMED || $status === WarmupStatus::CANCELLED) {
                 $warmup->setSentToday(0);
                 $warmup->setMaxToday(0);
             }
