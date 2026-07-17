@@ -10,6 +10,7 @@ import Dns from './content/Dns.svelte';
 import Scaling from './content/Scaling.svelte';
 import EmailProviders from './content/EmailProviders.svelte';
 import HealthChecks from './content/HealthChecks.svelte';
+import Management from './content/Management.svelte';
 
 export const categories: Category[] = [
 	{
@@ -34,6 +35,11 @@ export const categories: Category[] = [
 				slug: 'setup',
 				name: 'Setup',
 				component: Setup
+			},
+			{
+				slug: 'management',
+				name: 'Management',
+				component: Management
 			},
 			{
 				slug: 'monitoring',
