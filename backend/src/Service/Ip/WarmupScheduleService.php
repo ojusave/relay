@@ -134,15 +134,23 @@ class WarmupScheduleService
             return [];
         }
 
-        /** @var array<int, WarmupSchedule> */
-        return $this->em->createQueryBuilder()
+        /** @var WarmupSchedule[] $results */
+        $results = $this->em->createQueryBuilder()
             ->select('ws')
-            ->from(WarmupSchedule::class, 'ws', 'IDENTITY(ws.ip_address)')
+            ->from(WarmupSchedule::class, 'ws')
+            ->join('ws.ip_address', 'ip')
             ->where('ws.ip_address IN (:ipAddresses)')
             ->andWhere('ws.status = :status')
             ->setParameter('ipAddresses', $ipAddresses)
             ->setParameter('status', WarmupStatus::WARMING)
             ->getQuery()
             ->getResult();
+
+        $indexed = [];
+        foreach ($results as $ws) {
+            $indexed[$ws->getIpAddress()->getId()] = $ws;
+        }
+
+        return $indexed;
     }
 }
