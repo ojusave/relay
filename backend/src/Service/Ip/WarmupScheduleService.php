@@ -134,6 +134,7 @@ class WarmupScheduleService
             return [];
         }
 
+        /** @var array<int, WarmupSchedule> */
         return $this->em->createQueryBuilder()
             ->select('ws')
             ->from(WarmupSchedule::class, 'ws', 'IDENTITY(ws.ip_address)')
