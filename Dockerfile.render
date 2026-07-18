@@ -3,6 +3,11 @@
 ARG RELAY_VERSION=0.0.45
 FROM hyvor/relay:${RELAY_VERSION}
 
+# Render runs containers with no-new-privileges. FrankenPHP ships with
+# cap_net_bind_service, which makes `exec frankenphp` fail with
+# "Operation not permitted". We listen on $PORT (high port), so drop the cap.
+RUN setcap -r /usr/local/bin/frankenphp
+
 COPY meta/image/prod/Caddyfile.render /etc/caddy/Caddyfile.render
 COPY meta/image/prod/run.render /app/run.render
 
