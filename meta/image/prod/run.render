@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+# Render terminates TLS; listen HTTP on $PORT only.
+if [ -n "${PORT:-}" ] && [ -f /etc/caddy/Caddyfile.render ]; then
+	cp /etc/caddy/Caddyfile.render /etc/caddy/Caddyfile
+fi
+
+# Public URL for OIDC callbacks and absolute links.
+if [ -z "${WEB_URL:-}" ] && [ -n "${RENDER_EXTERNAL_URL:-}" ]; then
+	export WEB_URL="$RENDER_EXTERNAL_URL"
+fi
+
+# Symfony Doctrine prefers an explicit serverVersion.
+if [ -n "${DATABASE_URL:-}" ]; then
+	case "$DATABASE_URL" in
+		*serverVersion*) ;;
+		*\?*) export DATABASE_URL="${DATABASE_URL}&serverVersion=16&charset=utf8" ;;
+		*) export DATABASE_URL="${DATABASE_URL}?serverVersion=16&charset=utf8" ;;
+	esac
+fi
+
+exec sh /app/run

@@ -1,0 +1,9 @@
+# Thin Render overlay on the official Hyvor Relay image.
+# Builds in seconds (copy + CMD) instead of rebuilding PHP/Go/Node from source.
+ARG RELAY_VERSION=0.0.45
+FROM hyvor/relay:${RELAY_VERSION}
+
+COPY meta/image/prod/Caddyfile.render /etc/caddy/Caddyfile.render
+COPY meta/image/prod/run.render /app/run.render
+
+CMD ["sh", "/app/run.render"]

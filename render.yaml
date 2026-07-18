@@ -1,0 +1,78 @@
+# Hyvor Relay on Render
+# Deploy: https://dashboard.render.com/blueprint/new?repo=https://github.com/ojusave/relay
+#
+# What gets provisioned:
+#   1. hyvor-relay  - web service (thin Docker overlay on hyvor/relay)
+#   2. relay-db     - managed PostgreSQL
+#
+# Before Apply, set secrets:
+#   - INSTANCE_DOMAIN     (e.g. mail.example.com)
+#   - OIDC_ISSUER_URL     (OpenID Connect issuer)
+#   - OIDC_CLIENT_ID
+#   - OIDC_CLIENT_SECRET
+#
+# Limits on Render (vs bare-metal / host-network VPS):
+#   - Only HTTP(S) is public. Built-in SMTP (25/587) and DNS (53) are not exposed.
+#   - Outbound SMTP to port 25 may be blocked. Full deliverability needs a VPS with
+#     host networking, public IPs, and PTR records (see https://relay.hyvor.com/hosting).
+#   - This Blueprint is for running the console/API and exploring Relay on Render.
+
+previews:
+  generation: off
+
+projects:
+  - name: hyvor-relay
+    environments:
+      - name: production
+        databases:
+          - name: relay-db
+            plan: basic-256mb
+            databaseName: hyvor_relay
+            user: hyvor_relay
+
+        services:
+          - type: web
+            name: hyvor-relay
+            runtime: docker
+            dockerfilePath: ./Dockerfile.render
+            dockerContext: .
+            plan: standard
+            region: oregon
+            numInstances: 1
+            healthCheckPath: /api/health
+            autoDeployTrigger: commit
+
+            envVars:
+              - key: APP_ENV
+                value: prod
+              - key: LOG_LEVEL
+                value: info
+              - key: TELEMETRY
+                value: "true"
+              - key: DEPLOYMENT
+                value: on-prem
+
+              - key: APP_SECRET
+                generateValue: true
+
+              - key: DATABASE_URL
+                fromDatabase:
+                  name: relay-db
+                  property: connectionString
+
+              # WEB_URL is set at runtime from RENDER_EXTERNAL_URL
+              # (see meta/image/prod/run.render). Override in the Dashboard for a custom domain.
+
+              - key: INSTANCE_DOMAIN
+                sync: false
+
+              - key: OIDC_ISSUER_URL
+                sync: false
+              - key: OIDC_CLIENT_ID
+                sync: false
+              - key: OIDC_CLIENT_SECRET
+                sync: false
+
+              # Trust Render's private network / edge proxies
+              - key: TRUSTED_PROXIES
+                value: "127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,100.64.0.0/10"
